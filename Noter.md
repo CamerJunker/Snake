@@ -61,6 +61,21 @@ git config --global user.email useremail@email.com
 
 I stedet for useremail@email.com, så skriv den email du bruger til github.com.
 
+## Git i Source Control
+Når du er færdig med forrige sektion, så kan du bruge Source Control til at bruge git meget nemmere.
+
+Hvis du vil fetch:
+- Tryk på Source Control i menuen i venstre side.
+- I "Graph"-sektionen er der to pile der peger nedad, den første har en tool-tip der siger "Fetch From All Remotes". Hvis du trykker på den får du alle de opdateringer der er lavet på vores repository.
+
+Hvis du vil pull:
+- Tryk på Source Control i menuen i venstre side.
+- I "Graph"-sektionen er der to pile der peger nedad, den anden har en tool-tip der siger "Pull". Tryk på den for at acceptere nye opdateringer lavet på vores repository.
+
+Hvis du vil gemme dine egne ændringer:
+- I "Changes"-sektionen, så ser du dine ændringer under sektionen "Changes" (Ja, sektionen Changes har en undersektion der hedder Changes), disse kan du tillægge til din "Stage" for at udvælge dem til at blive committed, du trykker bare på plus-ikonen der kaldes "Stage Changes".
+- 
+
 ## Git på terminal
 ### For at tjekke om andre har lavet ændringer
 
