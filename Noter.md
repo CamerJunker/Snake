@@ -19,4 +19,12 @@ Eksempel af hvad der sker når der bruges Model-view-controller:
 # Aflevering
 Afleveres d. 18. januar 2026.
 - En rapport skrevet i LaTeX, afleveret som pdf.
-- Zip fil indeholdende mindst den grundlæggende del (obligatorisk) som jar-fil med tilhørende README.md, men kan også indeholde den avancerede del (valgfrit) som en separat jar-fil og tilhørende README.md, alt sammen i én zip fil
+- Zip fil indeholdende mindst den grundlæggende del (obligatorisk) som jar-fil med tilhørende README.md, men kan også indeholde den avancerede del (valgfrit) som en separat jar-fil og tilhørende README.md, alt sammen i én zip fil.
+
+
+# Mødetider
+Fælles mødetider for gruppen:
+Bare skriv hvis du kommer forsent, det gør ikke noget!
+- d. 12. januar, mandag kl. 12.
+- d. 16. januar, fredag kl. 12.
+PS: Disse mødetider kan ændres alt efter behov.
