@@ -40,7 +40,7 @@ PS: Disse mødetider kan ændres alt efter behov.
 Link til artikel om Source Control: [Link](https://code.visualstudio.com/docs/sourcecontrol/overview)
 
 
-Man kan bruge Source Control (I jeres VSCode menu i venstre side, er der muligvis en ikon der ligner forbindelser mellem tre cirkler) til at gøre alt hvad vi før har gjort i terminalen, men for at bruge den skal man først gøre følgende:
+Man kan bruge Source Control (I VSCode menu i venstre side, er der muligvis en ikon der ligner forbindelser mellem tre cirkler) til at gøre alt hvad vi før har gjort i terminalen, men for at bruge den skal man først gøre følgende:
 
 
 1. Åbn terminalen og skriv:
@@ -49,7 +49,7 @@ Man kan bruge Source Control (I jeres VSCode menu i venstre side, er der muligvi
 git config --global user.name "Github-Brugernavn"
 ```
 
-I stedet for Github-Brugernavn, så skriv jeres rigtige brugernavn i bruger på github.com.
+I stedet for Github-Brugernavn, så skriv dit brugernavn du bruger på github.com.
 
 
 2. Skriv i terminalen:
@@ -59,10 +59,10 @@ git config --global user.email useremail@email.com
 ```
 
 
-I stedet for useremail@email.com, så skriv den email I bruger til github.com.
+I stedet for useremail@email.com, så skriv den email du bruger til github.com.
 
 ## Git på terminal
-### For at tjekke om andre har lavet ændringer:
+### For at tjekke om andre har lavet ændringer
 
 ```
 git fetch
@@ -75,7 +75,7 @@ git pull
 ```
 
 
-### For at gemme dit arbejde:
+### For at gemme dit arbejde
 Altid undersøg om andre har ændret noget i main branch:
 ```
 git fetch
