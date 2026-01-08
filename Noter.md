@@ -27,4 +27,5 @@ Fælles mødetider for gruppen:
 Bare skriv hvis du kommer forsent, det gør ikke noget!
 - d. 12. januar, mandag kl. 12.
 - d. 16. januar, fredag kl. 12.
+
 PS: Disse mødetider kan ændres alt efter behov.
