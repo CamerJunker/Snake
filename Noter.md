@@ -36,3 +36,40 @@ Test
 
 test2
 test3
+
+# Brug af Git i VSCode
+
+For at tjekke om andre har lavet ændringer:
+1. Git fetch
+
+Hvis der kommer tekst frem på terminalen, så:
+2. Git pull
+
+Hvis der er yderligere beskeder efter dette:
+(Har ikke skrevet dette endnu)
+
+For at gemme dit arbejde:
+1. git fetch
+
+Hvis der er ændringer:
+2. git pull
+
+Undersøg hvilke filer du selv har ændret:
+3. git status
+
+Vælg de filer du har ændret:
+4. git add filnavn.txt
+
+(Her er filnavn.txt bare et eksempel).
+"Gem" eller commit de ændringer du har lavet i den fil, eller de filer du har valgt:
+5. git commit -m "Beskriv de ændringer du har lavet"
+
+Send ændringerne til vores fælles repository:
+6. git push
+
+For at få hjælp til kommandoer i selve terminalen:
+7. git help
+
+Brug Google til at finde løsninger til evt. problemer.
+Alle er velkomne til at dele problemer og løsninger her!
+F.eks. "Hvis terminal siger X efter git push, så bare gør Y."
