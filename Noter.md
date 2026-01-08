@@ -1,0 +1,15 @@
+# Model View Controller
+
+Model: 
+
+View: Klasse der viser en hel eller delvis repræsentation af de data der er i modellen. View skal opdatere, når der sker ændringer i modellen. View er vores user interface (UI), det tager sig af layout og styling, men ikke af logik og funktioner.
+
+Controller:
+
+Eksempel af hvad der sker når der bruges Model-view-controller:
+1. Brugeren interagerer med vinduet som view laver.
+2. Controller får brugerens input fra view, og tolker kommandoen.
+3. Controller fortæller model at den skal f.eks. hente data, ændre data, opdatere data osv.
+4. Model udregner logikken og returnerer data, eller opdatere sine egne data.
+5. Controller modtager data fra Model og sender det til View, som opdatere sig selv, så ændringen vises på skærmen for brugeren.
+
