@@ -74,7 +74,9 @@ Hvis du vil pull:
 
 Hvis du vil gemme dine egne ændringer:
 - I "Changes"-sektionen, så ser du dine ændringer under sektionen "Changes" (Ja, sektionen Changes har en undersektion der hedder Changes), disse kan du tillægge til din "Stage" for at udvælge dem til at blive committed, du trykker bare på plus-ikonen der kaldes "Stage Changes".
-- 
+- Når du har ændringer i sektionen "Staged Changes" Så kan du skrive en besked der beskriver hvad du har ændret i "Message"-inputfeltet ovenover.
+- Når du har skrevet en besked, så kan du trykke på knappen "Commit".
+- For at sende dine ændringer afsted, skal du trykke.
 
 ## Git på terminal
 ### For at tjekke om andre har lavet ændringer
