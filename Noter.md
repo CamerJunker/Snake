@@ -47,7 +47,10 @@ Man kan bruge Source Control (I jeres VSCode menu i venstre side, er der muligvi
 
 1. Åbn terminalen og skriv:
 
-```git config --global user.name "Github-Brugernavn"```
+```
+git config --global user.name "Github-Brugernavn"
+```
+
 I stedet for Github-Brugernavn, så skriv jeres rigtige brugernavn i bruger på github.com.
 
 2. Skriv i terminalen:
