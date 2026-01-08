@@ -39,16 +39,31 @@ test3
 
 # Brug af Git i VSCode
 
-For at tjekke om andre har lavet ændringer:
-1. Git fetch
+## Opsætning:
+
+Link til artikel om Source Control: [Link](https://code.visualstudio.com/docs/sourcecontrol/overview)
+
+Man kan bruge Source Control (I jeres VSCode menu i venstre side, er der muligvis en ikon der ligner forbindelser mellem tre cirkler) til at gøre alt hvad vi før har gjort i terminalen, men for at bruge den skal man først gøre følgende:
+
+1. Åbn terminalen og skriv:
+git config --global user.name "Github-Brugernavn"
+I stedet for Github-Brugernavn, så skriv jeres rigtige brugernavn i bruger på github.com.
+
+2. Skriv i terminalen:
+git config --global user.email useremail@email.com
+I stedet for useremail@email.com, så skriv den email I bruger til github.com.
+
+Dette sørger for at I ikke skal logge ind hver gang I laver en ændring, hvis ikke dette virker er I velkomne til at komme med en bedre løsning!
+
+## Git på terminal
+### For at tjekke om andre har lavet ændringer:
+1. git fetch
 
 Hvis der kommer tekst frem på terminalen, så:
-2. Git pull
+2. git pull
 
-Hvis der er yderligere beskeder efter dette:
-(Har ikke skrevet dette endnu)
-
-For at gemme dit arbejde:
+### For at gemme dit arbejde:
+Altid undersøg om andre har ændret noget i main branch:
 1. git fetch
 
 Hvis der er ændringer:
@@ -70,6 +85,57 @@ Send ændringerne til vores fælles repository:
 For at få hjælp til kommandoer i selve terminalen:
 7. git help
 
-Brug Google til at finde løsninger til evt. problemer.
+Brug Google til at finde løsninger til eventuelle problemer.
 Alle er velkomne til at dele problemer og løsninger her!
 F.eks. "Hvis terminal siger X efter git push, så bare gør Y."
+
+## Tip til workflow: Git branch
+
+Det kan være brugbart at lave sin egen "Branch". Dette er fordi, hvis alle laver ændringer på samme tid, så kan du miste dine ændringer, eller der kan komme rod i projektet og forårsage unødvendige hovedpiner individuelt.
+
+Du kan lave en branch hver gang du vil arbejde på noget, som du senere vil "merge" ind i projektets main branch.
+
+Som eksempel, kunne man begynde at arbejde på at lave et vindue der kommer når programmet starter, men man ved ikke om det virker endnu, så man laver en ny branch der hedder "Vindue" (Eller andet man synes er mere beskrivende).
+
+Når man så har fået programmet i sin Vindue-branch til at åbne et vindue ved program-start, så kan man *merge* sin branch til main, uden at alle andres ændringer laver rod i det.
+
+Der er flere videoer på youtube der er meget bedre til at forklare git branch og git merge! Så der er altid hjælp at hente.
+
+Herunder beskrives lidt om hvordan man laver en branch
+
+### Hvordan man laver en ny branch, med Source Control
+Forsøg at åbne Source Control (Hvis man flytter musen henover hver ikon, så vil deres navne poppe frem, så kan man let finde Source Control) fra din Visual Studio Code menu på venstrehånd.
+
+Der burde komme en sidemenu frem på venstrehånd der hedder "Source Control", her kan du trykke på "Changes".
+
+Herfra kan du flytte din mus henover changes og se flere knapper der fremvises, tryk på de tre prikker der hedder "More Actions..." (Hvis jeres Visual Studio Code altså er på engelsk). 
+
+Herfra får du en pop-up menu hvor du kan trykke "Branch" > "Create Branch...", og skrive dét navn du vil give din branch.
+
+Hvis du nu trykker på de tre prikker (More Actions...) igen, så kan du trykke "Checkout to..." og vælge dén branch du har lavet.
+
+Når du har gjort dette, så burde du kunne lave ændringer i filerne, og commit og push, uden at det rører ved main-branch, det ændrer kun filerne i din selv-lavede branch!
+
+Senere kan du så merge din branch med main branch.
+
+### Hvordan man laver en ny branch, i terminalen
+
+git branch NyBranchNavn
+
+### Skift til en anden branch
+
+git checkout BranchNavn
+
+### Hvordan sletter man en branch, i terminalen
+
+git branch -D BranchNavn
+
+### Hvordan man merger sin branch med main-branch
+
+I Source Control, tryk "Changes", tryk på de tre prikker der kommer frem når du holder musen over "Changes". Tryk "Branch" > "Merge...". Derefter vælger du dén branch du vil merge din nuværende branch med.
+
+### Tjek hvilken branch du er på
+
+- I Source Control: Tryk på "Changes" og flyt din mus henover den blå "Commit"-knap, uden at trykke på noget, så vil der komme en tool-tip frem der siger "Commit changes on "branch-name"", hvor branch-name er navnet på dén branch du er på nu. Hvis ikke du har lavet en ny branch eller "Checkout to..." til en ny branch, så vil der stå: "Commit changes on "main"".
+
+- I terminalen: Skriv "git status". I terminalen vil der lige efter din kommando stå: "On branch main", hvis du er på main branch. Hvis du er på en anden branch, vil navnet på dette branch stå i stedet for "main".
