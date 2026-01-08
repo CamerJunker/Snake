@@ -35,7 +35,7 @@ PS: Disse mødetider kan ændres alt efter behov.
 
 # Brug af Git i VSCode
 
-## Opsætning:
+## Opsætning
 
 Link til artikel om Source Control: [Link](https://code.visualstudio.com/docs/sourcecontrol/overview)
 
@@ -194,4 +194,4 @@ I Source Control, tryk "Changes", tryk på de tre prikker der kommer frem når d
 - I Source Control: Tryk på "Changes" og flyt din mus henover den blå "Commit"-knap, uden at trykke på noget, så vil der komme en tool-tip frem der siger "Commit changes on "branch-name"", hvor branch-name er navnet på dén branch du er på nu. Hvis ikke du har lavet en ny branch eller "Checkout to..." til en ny branch, så vil der stå: "Commit changes on "main"".
 
 
-- I terminalen: Skriv "git status". I terminalen vil der lige efter din kommando stå: "On branch main", hvis du er på main branch. Hvis du er på en anden branch, vil navnet på dette branch stå i stedet for "main".
+- I terminalen: Skriv ``git status``. I terminalen vil der lige efter din kommando stå: "On branch main", hvis du er på main branch. Hvis du er på en anden branch, vil navnet på dette branch stå i stedet for "main".
