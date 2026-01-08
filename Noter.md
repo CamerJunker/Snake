@@ -1,5 +1,7 @@
 # Model View Controller
 
+Link til forklaring af Model View Controller: http://www.docjava.dk/patterns/model_view_controller/model_view_controller.htm
+
 Model: Klasse der indeholder de relevante data, og laver udregninger på dem.
 
 View: Klasse der viser en hel eller delvis repræsentation af de data der er i modellen. View skal opdatere, når der sker ændringer i modellen. View er vores user interface (UI), det tager sig af layout og styling, men ikke af logik og funktioner.
