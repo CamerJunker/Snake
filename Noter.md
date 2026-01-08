@@ -46,7 +46,8 @@ Link til artikel om Source Control: [Link](https://code.visualstudio.com/docs/so
 Man kan bruge Source Control (I jeres VSCode menu i venstre side, er der muligvis en ikon der ligner forbindelser mellem tre cirkler) til at gøre alt hvad vi før har gjort i terminalen, men for at bruge den skal man først gøre følgende:
 
 1. Åbn terminalen og skriv:
-git config --global user.name "Github-Brugernavn"
+
+```git config --global user.name "Github-Brugernavn"```
 I stedet for Github-Brugernavn, så skriv jeres rigtige brugernavn i bruger på github.com.
 
 2. Skriv i terminalen:
