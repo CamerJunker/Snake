@@ -73,10 +73,10 @@ Hvis du vil pull:
 - I "Graph"-sektionen er der to pile der peger nedad, den anden har en tool-tip der siger "Pull". Tryk på den for at acceptere nye opdateringer lavet på vores repository.
 
 Hvis du vil gemme dine egne ændringer:
-- I "Changes"-sektionen, så ser du dine ændringer under undersektionen "Changes", disse kan du tillægge til din "Stage" for at udvælge dem til at blive committed, du trykker bare på plus-ikonen (+) der kaldes "Stage Changes".
-- Når du har ændringer i sektionen "Staged Changes" Så kan du skrive en besked der beskriver hvad du har ændret i "Message"-inputfeltet ovenover.
-- Når du har skrevet en besked, så kan du trykke på knappen "Commit".
-- For at sende dine ændringer afsted, skal du trykke på knappen igen. På knappen står der bare "Sync Changes" i stedet for "Commit".
+1. I "Changes"-sektionen, så ser du dine ændringer under undersektionen "Changes", disse kan du tillægge til din "Stage" for at udvælge dem til at blive committed, du trykker bare på plus-ikonen (+) der kaldes "Stage Changes".
+2. Dine ændringer ligger nu i sektionen "Staged Changes" så kan du skrive en besked der beskriver hvad du har ændret i "Message"-inputfeltet ovenover.
+3. Når du har skrevet en besked, så kan du trykke på knappen "Commit".
+4. For at sende dine ændringer afsted, skal du trykke på knappen igen. På knappen står der bare "Sync Changes" i stedet for "Commit".
 
 ## Git på terminal
 ### For at tjekke om andre har lavet ændringer
