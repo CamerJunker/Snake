@@ -61,10 +61,6 @@ git config --global user.email useremail@email.com
 
 I stedet for useremail@email.com, så skriv den email I bruger til github.com.
 
-
-Dette sørger for at I ikke skal logge ind hver gang I laver en ændring, hvis ikke dette virker er I velkomne til at komme med en bedre løsning!
-
-
 ## Git på terminal
 ### For at tjekke om andre har lavet ændringer:
 
