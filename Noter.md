@@ -17,6 +17,17 @@ Eksempel af hvad der sker når der bruges Model-view-controller:
 4. Model udregner logikken og returnerer data, eller opdatere sine egne data.
 5. Controller modtager data fra Model og sender det til View, som opdatere sig selv, så ændringen vises på skærmen for brugeren.
 
+## Vores Model-view-controller setup
+
+*Denne sektion vil beskrive hvad hver fil indeholder og bruges til.*
+
+
+- MainApp: Initialiserer de andre filer (klasser), og starter programmet.
+- GameView: Styrer det visuelle som brugeren kan se og interagere med i spillet.
+- GameModel: Holder styr på vores data, modtager og returnerer data, udførerer nødvendige for at opdatere sine egne data, samt for at returnere data, hvis nødvendigt. 
+- GameController: Fungerer som bestyrelsen der modtager kommandoer fra GameView og sender anmodninger til GameModel, modtager om nødvendigt data fra GameModel og sender dem videre til GameView.
+- Direction:
+- Cell:
 
 # Aflevering
 Afleveres d. 18. januar 2026.
