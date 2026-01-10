@@ -42,18 +42,22 @@ public class GameController extends JPanel implements ActionListener{
                 case KeyEvent.VK_LEFT:
                     dir = Direction.LEFT;
                     GM.step(dir);
+                    repaint();
                     break;
                 case KeyEvent.VK_RIGHT:
                     dir = Direction.RIGHT;
                     GM.step(dir);
+                    repaint();
                     break;
                 case KeyEvent.VK_UP:
                     dir = Direction.UP;
                     GM.step(dir);
+                    repaint();
                     break;
                 case KeyEvent.VK_DOWN:
                     dir = Direction.DOWN;
                     GM.step(dir);
+                    repaint();
                     break;
             }
         }
