@@ -40,6 +40,27 @@ public final class GameModel {
 
     // nulstiller spillet til starttilstanden
     public void reset() {
-        // ...
+
+        // Issue 1: opret startslange (længde 2) i midten af brættet
+        snake.clear();
+        occupied.clear();
+
+        // Midterposition på spillebrættet
+        int r0 = rows / 2;
+        int c0 = cols / 2;
+
+        // Slangens hoved placeres i midten
+        Cell head = new Cell(r0, c0);
+
+        // Andet led placeres direkte under hovedet (wrap-around hvis nødvendigt)
+        Cell second = new Cell((r0 + 1) % rows, c0);
+
+        // hovedet skal ligge forrest i Deque/rækkefølgen
+        snake.addFirst(head);
+        snake.addLast(second);
+
+        // Opdater mængden af optagne felter til kollisionskontrol
+        occupied.add(head);
+        occupied.add(second);
     }
 }
