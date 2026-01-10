@@ -143,6 +143,12 @@ public final class GameModel {
     //Placér mad tilfældigt, udenfor slangens krop
     private void setFood() {
 
+        // håndterer tilfælde: ingen tomme felter
+        if (occupied.size() == rows * cols) {
+            gameOver = true;
+            return;
+        }
+
         // Find en celle der ikke er optaget af slangens krop
         int XVærdi, YVærdi;
         Cell FoodCell;
