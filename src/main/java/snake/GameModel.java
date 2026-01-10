@@ -36,9 +36,6 @@ public final class GameModel {
     }
 
     
-    // TODO: Implementér reset(): placer startslangen (længde 2) i midten af brættet
-    // TODO: Implementér reset(): nulstil score, direction og gameOver
-    // TODO: Implementér reset(): placer mad på en tilfældig tom celle
     // TODO: Implementér step(Direction): én spilrunde pr. tastetryk
     // TODO: Håndtér kollision med slangen og wrap-around (torus)
 
@@ -81,7 +78,7 @@ public final class GameModel {
     }
 
     //Placér mad tilfældigt, udenfor slangens krop
-    public void setFood() {
+    private void setFood() {
 
         // Find en celle der ikke er optaget af slangens krop
         int XVærdi, YVærdi;
