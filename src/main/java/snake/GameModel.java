@@ -105,4 +105,11 @@ public final class GameModel {
         // Initialisér mad i den fundne tilgængelige celle
         this.food = FoodCell;
     }
+
+    //getters så at Controller/View også kan bruge modellen
+    public Iterable<Cell> getSnake() { return snake; }
+    public Cell getFood() { return food; }
+    public int getScore() { return score; }
+    public boolean isGameOver() { return gameOver; }
+    public Direction getDirection() { return dir; }
 }
