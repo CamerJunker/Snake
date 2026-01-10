@@ -1,5 +1,3 @@
 package snake;
 
-public class Cell {
-    
-}
+public record Cell(int r, int c) {}
