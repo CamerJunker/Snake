@@ -62,5 +62,14 @@ public final class GameModel {
         // Opdater mængden af optagne felter til kollisionskontrol
         occupied.add(head);
         occupied.add(second);
+
+        // Reset game score
+        this.score = 0;
+
+        // Reset hvilken retning slangen starter med at gå
+        this.dir = Direction.LEFT;
+
+        // Reset game over
+        this.gameOver = false;
     }
 }
