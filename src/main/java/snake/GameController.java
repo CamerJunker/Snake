@@ -10,10 +10,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 public class GameController extends JPanel implements ActionListener{
-
+    // Laver en GameModel object
     private GameModel GM;
+    // Laver baggrundsfarven, som er mørkegrøn
     public static final Color DARK_GREEN = new Color(0,102,0);
 
+    // Laver en GameController object
     GameController(int n, int m){
         this.GM = new GameModel(n, m);
         this.setPreferredSize(new Dimension(n*10,m*10));
@@ -22,6 +24,7 @@ public class GameController extends JPanel implements ActionListener{
         this.addKeyListener(new SnakeKeyAdapter());
     }
 
+    // TO BE CONSTRUCTED
     @Override
     public void actionPerformed(ActionEvent e) {
         
