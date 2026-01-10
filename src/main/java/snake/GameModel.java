@@ -27,11 +27,15 @@ public final class GameModel {
 
     // Opretter modellen og initialiserer spillet
     public GameModel(int n, int m) {
+        // Lav spilbræt
         this.rows = n;
         this.cols = m;
+
+        // Reset alle relevante variabler
         reset();
     }
 
+    
     // TODO: Implementér reset(): placer startslangen (længde 2) i midten af brættet
     // TODO: Implementér reset(): nulstil score, direction og gameOver
     // TODO: Implementér reset(): placer mad på en tilfældig tom celle
@@ -71,5 +75,37 @@ public final class GameModel {
 
         // Reset game over
         this.gameOver = false;
+
+        // Issue 3: Sæt maden tilfældigt udenfor slangen
+        this.setFood();
+    }
+
+    //Placér mad tilfældigt, udenfor slangens krop
+    public void setFood() {
+
+        // Find en celle der ikke er optaget af slangens krop
+        int XVærdi, YVærdi;
+        Cell FoodCell;
+
+        // While-loop kører indtil ubrugt celle er fundet
+        while(true){
+            // Brug random generator til at lave nogle tilfældige koordinator
+            YVærdi = rng.nextInt(this.rows);
+            XVærdi = rng.nextInt(this.cols);
+        
+            // Initialisér celle med fundne koordinater
+            FoodCell = new Cell(YVærdi, XVærdi);
+
+            // Tjek om celle findes i slangens krop
+            if (this.occupied.contains(FoodCell)) {
+                continue;
+            } else {
+                break;
+            }
+
+        }
+
+        // Initialisér mad i den fundne tilgængelige celle
+        this.food = FoodCell;
     }
 }
