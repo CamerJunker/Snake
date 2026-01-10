@@ -26,8 +26,8 @@ Eksempel af hvad der sker når der bruges Model-view-controller:
 - GameView: Styrer det visuelle som brugeren kan se og interagere med i spillet.
 - GameModel: Holder styr på vores data, modtager og returnerer data, udførerer nødvendige for at opdatere sine egne data, samt for at returnere data, hvis nødvendigt. 
 - GameController: Fungerer som bestyrelsen der modtager kommandoer fra GameView og sender anmodninger til GameModel, modtager om nødvendigt data fra GameModel og sender dem videre til GameView.
-- Direction:
-- Cell:
+- Direction: Klasse til at styre og huske hvilken retning slangen går.
+- Cell: Klasse til at lave celler og få lokationen af f.eks. slangen.
 
 # Aflevering
 Afleveres d. 18. januar 2026.
