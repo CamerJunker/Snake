@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 
 public class GameController extends JPanel implements ActionListener{
     // Laver en GameModel object
@@ -23,6 +24,46 @@ public class GameController extends JPanel implements ActionListener{
         this.setFocusable(true);
         this.addKeyListener(new SnakeKeyAdapter());
     }
+
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        // størrelsen af cellerne i pixels
+        int cell = 10;
+
+        // tegner mad
+        Cell food = GM.getFood();
+        if (food != null) {
+            g.setColor(Color.ORANGE);
+            g.fillRect(
+                food.c() * cell,
+                food.r() * cell,
+                cell,
+                cell
+            );
+        }
+
+        // tegner slangen
+        boolean head = true;
+        for (Cell c : GM.getSnake()) {
+            if (head) {
+                g.setColor(Color.GREEN.darker()); //hovedet
+                head =false;
+            } else {
+                g.setColor(Color.GREEN); //kroppen
+            }
+
+            g.fillRect(
+                c.c() * cell,
+                c.r() * cell,
+                cell,
+                cell
+            );
+        }
+    }
+
 
     // TO BE CONSTRUCTED
     @Override
