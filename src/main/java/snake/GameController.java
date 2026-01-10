@@ -37,7 +37,7 @@ public class GameController extends JPanel implements ActionListener{
         @Override
         public void keyPressed(KeyEvent e){
             // Initialiserer en variable for retning.
-            Direction dir;
+            Direction dir = null;
             switch(e.getKeyCode()) {
                 case KeyEvent.VK_LEFT:
                     dir = Direction.LEFT;
@@ -59,6 +59,8 @@ public class GameController extends JPanel implements ActionListener{
                     GM.step(dir);
                     repaint();
                     break;
+                default:
+                    return; //ignorerer alle andre taster
             }
         }
     }
