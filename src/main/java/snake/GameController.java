@@ -18,7 +18,7 @@ public class GameController extends JPanel implements ActionListener{
     // Laver en GameController object
     GameController(int n, int m){
         this.GM = new GameModel(n, m);
-        this.setPreferredSize(new Dimension(n*10,m*10));
+        this.setPreferredSize(new Dimension(m*10,n*10));
         this.setBackground(DARK_GREEN);
         this.setFocusable(true);
         this.addKeyListener(new SnakeKeyAdapter());
