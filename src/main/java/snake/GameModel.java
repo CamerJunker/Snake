@@ -27,6 +27,12 @@ public final class GameModel {
 
     // Opretter modellen og initialiserer spillet
     public GameModel(int n, int m) {
+        //inputvalidering som gør koden mere robust
+        if (n < 5 || n > 100 || m < 5 || m > 100) {
+            throw new IllegalArgumentException( "n og m skal være i [5..100]");
+        }
+
+
         // Lav spilbræt
         this.rows = n;
         this.cols = m;
@@ -36,9 +42,6 @@ public final class GameModel {
     }
 
     
-    // TODO: Implementér step(Direction): én spilrunde pr. tastetryk
-    // TODO: Håndtér kollision med slangen og wrap-around (torus)
-
     // nulstiller spillet til starttilstanden
     public void reset() {
 
@@ -176,6 +179,8 @@ public final class GameModel {
     }
 
     //getters så at Controller/View også kan bruge modellen
+    // getSnake gjort til read-only: ikke krav eller nødvendigt men er personlig præference fordi det er mere stabilt og, 
+    // sikrer at værdien ikke kan ændres af ekstern kode og dermed forhindrer en utilsigtet ændring som kunne føre til bugs
     public Iterable<Cell> getSnake() { 
         return Collections.unmodifiableCollection(snake); 
     }
