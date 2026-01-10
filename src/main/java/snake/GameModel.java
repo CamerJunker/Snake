@@ -77,6 +77,69 @@ public final class GameModel {
         this.setFood();
     }
 
+    /**
+    * Udfører én spilrunde baseret på brugerens input.
+    * @param requested den ønskede retning (fra controller). Ignoreres hvis null eller modsatrettet.
+    */
+    public void step(Direction requested) {
+        if (gameOver) return;
+
+        //opdater retning men forbyder en 180 graders vending
+        if (requested != null && requested != dir.opposite()) {
+            dir = requested;
+        }
+
+        // nuværende hoved og hale
+        Cell head = snake.peekFirst();
+        Cell tail = snake.peekLast();
+
+        // beregn næste hovedposition (wrap around håndteres)
+        int nextR = wrapRow(head.r() + dir.dr);
+        int nextC = wrapCol(head.c() + dir.dc);
+        Cell nextHead = new Cell(nextR, nextC);
+
+        // tjek om slangen spiser mad i dette step
+        boolean grows = nextHead.equals(food);
+
+        // Kollisionsregelen
+        //hvis næste felt er occupied af slangen -> gameOver
+        // undtagelse hvis feltet er occupied af slangens hale og slangen IKKE vokser
+        if (occupied.contains(nextHead)) {
+            boolean intoTail = nextHead.equals(tail);
+            if (!(intoTail && !grows)) {
+                gameOver = true;
+                return;
+            }
+        }
+
+        // Flytter -> lægger nyt hoved på
+        snake.addFirst(nextHead);
+        occupied.add(nextHead);
+
+        if (grows) {
+            // spiser mad: score++ og placérer ny mad. slangen vokser så halen fjernes ikke.
+            score++;
+            setFood();
+        } else {
+            // en normal bevægelse -> fjerner halen fordi slangen vokser ikke
+            Cell removed = snake.removeLast();
+            occupied.remove(removed);
+        }
+    }
+
+
+    // Wrap-around for række (torus)
+    private int wrapRow(int r) {
+        return (r % rows + rows) % rows;
+    }
+
+    // Wrap-around for kolonne (torus)
+    private int wrapCol(int c) {
+        return (c % cols + cols) % cols;
+    }
+
+
+
     //Placér mad tilfældigt, udenfor slangens krop
     private void setFood() {
 
@@ -107,7 +170,9 @@ public final class GameModel {
     }
 
     //getters så at Controller/View også kan bruge modellen
-    public Iterable<Cell> getSnake() { return snake; }
+    public Iterable<Cell> getSnake() { 
+        return Collections.unmodifiableCollection(snake); 
+    }
     public Cell getFood() { return food; }
     public int getScore() { return score; }
     public boolean isGameOver() { return gameOver; }
