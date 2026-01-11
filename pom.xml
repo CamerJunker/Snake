@@ -15,6 +15,8 @@
     </properties>
 
     <build>
+        <finalName>snake</finalName>
+             
         <plugins>
             <!-- Compile with Java 21 -->
             <plugin>
