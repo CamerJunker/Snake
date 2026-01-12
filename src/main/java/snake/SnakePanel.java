@@ -10,7 +10,7 @@ public class SnakePanel extends JPanel {
     // Laver en GameModel object
     private final GameModel model;
     // Laver baggrundsfarven, som er mørkegrøn
-    public static final Color DARK_GREEN = new Color(0,102,0);
+    public static final Color DARK_GREEN = new Color(40, 40, 40);
 
     //Celle Størrelsen
     private static final int CELL_SIZE = 10;
