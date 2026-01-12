@@ -1,5 +1,13 @@
 # Kør programmet
-Hvis man er i Snake-mappen, så kør med denne kommando:
+1. Navigér ind i Snake-mappen
+
+2. Compile programmet med:
+
+```
+mvn clean package
+```
+
+3. Kør med denne kommando:
 
 Windows:
 ```
@@ -13,12 +21,6 @@ java -jar /target/snake.jar n m
 
 Hvor n og m er heltal fra 5 til 100 hver.
 
-
-Hvis ikke det virker, eller bare for at gøre rent før du kører, så kør:
-
-```
-mvn clean package
-```
 
 Hvis ingen af disse virker i VSCode (Visual Studio Code), så åbn en separat terminal, og navigér til arbejdsmappen Snake, så kør kommandoerne igen.
 
