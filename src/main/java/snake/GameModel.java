@@ -41,7 +41,6 @@ public final class GameModel {
         reset();
     }
 
-    
     // nulstiller spillet til starttilstanden
     public void reset() {
 
@@ -105,7 +104,7 @@ public final class GameModel {
         boolean grows = nextHead.equals(food);
 
         // Kollisionsregelen
-        //hvis næste felt er occupied af slangen -> gameOver
+        // hvis næste felt er occupied af slangen -> gameOver
         // undtagelse hvis feltet er occupied af slangens hale og slangen IKKE vokser
         if (occupied.contains(nextHead)) {
             boolean intoTail = nextHead.equals(tail);
@@ -119,17 +118,17 @@ public final class GameModel {
         snake.addFirst(nextHead);
         occupied.add(nextHead);
 
+        // Hvis slangen vokser
         if (grows) {
             // spiser mad: score++ og placérer ny mad. slangen vokser så halen fjernes ikke.
             score++;
             setFood();
         } else {
-            // en normal bevægelse -> fjerner halen fordi slangen vokser ikke
+            // en normal bevægelse -> fjerner halen fordi slangen vokser ikke, men rykker sig og slangen har rykket sig ét felt
             Cell removed = snake.removeLast();
             occupied.remove(removed);
         }
     }
-
 
     // Wrap-around for række (torus)
     private int wrapRow(int r) {
@@ -140,8 +139,6 @@ public final class GameModel {
     private int wrapCol(int c) {
         return (c % cols + cols) % cols;
     }
-
-
 
     //Placér mad tilfældigt, udenfor slangens krop
     private void setFood() {

@@ -15,7 +15,7 @@ public class SnakePanel extends JPanel {
     //Celle Størrelsen
     private static final int CELL_SIZE = 10;
 
-     public SnakePanel(GameModel model) {
+    public SnakePanel(GameModel model) {
         this.model = model;
 
         this.setPreferredSize(new Dimension(model.getCols() * CELL_SIZE, model.getRows() * CELL_SIZE));
@@ -40,7 +40,8 @@ public class SnakePanel extends JPanel {
                 CELL_SIZE
             );
         }
-         // tegner slangen
+
+        // tegner slangen
         boolean head = true;
         for (Cell c : model.getSnake()) {
             if (head) {
@@ -57,6 +58,9 @@ public class SnakePanel extends JPanel {
                 CELL_SIZE
             );
         }
+
+        // Tegner "Game Over"
+
     }
 
 }
