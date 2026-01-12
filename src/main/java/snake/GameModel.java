@@ -9,8 +9,8 @@ import java.util.*;
 
 public final class GameModel {
     // spillebrættets størrelse (ændres ikke efter konstruktion)
-    public final int rows; // n
-    public final int cols; // m
+    private final int rows; // n
+    private final int cols; // m
 
     // Slangen gemmes i rækkefølge(Deque) og som mængde(Set) for kollisionskontrol
     private final Deque<Cell> snake = new ArrayDeque<>();
@@ -188,4 +188,6 @@ public final class GameModel {
     public int getScore() { return score; }
     public boolean isGameOver() { return gameOver; }
     public Direction getDirection() { return dir; }
+    public int getCols() { return cols; }
+    public int getRows() { return rows; }
 }
