@@ -1,3 +1,27 @@
+# Kør programmet
+Hvis man er i Snake-mappen, så kør med denne kommando:
+
+Windows:
+```
+java -jar .\target\snake.jar n m
+```
+
+Linux / MacOS:
+```
+java -jar /target/snake.jar n m
+```
+
+Hvor n og m er heltal fra 5 til 100 hver.
+
+
+Hvis ikke det virker, eller bare for at gøre rent før du kører, så kør:
+
+```
+mvn clean package
+```
+
+Hvis ingen af disse virker i VSCode (Visual Studio Code), så åbn en separat terminal, og navigér til arbejdsmappen Snake, så kør kommandoerne igen.
+
 # Model View Controller
 
 Link til forklaring af Model View Controller: http://www.docjava.dk/patterns/model_view_controller/model_view_controller.htm
