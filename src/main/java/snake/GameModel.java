@@ -20,7 +20,7 @@ public final class GameModel {
     private Direction dir = Direction.LEFT;
     private Cell food;
     private int score = 0;
-    private boolean gameOver = false;
+    private GameState state = GameState.PLAYING;
 
     // random generator til at placere maden tilfældigt
     private final Random rng = new Random();
@@ -72,7 +72,7 @@ public final class GameModel {
         this.dir = Direction.LEFT;
 
         // Reset game over
-        this.gameOver = false;
+        this.state = GameState.PLAYING;
 
         // Issue 3: Sæt maden tilfældigt udenfor slangen
         this.setFood();
@@ -83,7 +83,7 @@ public final class GameModel {
     * @param requested den ønskede retning (fra controller). Ignoreres hvis null eller modsatrettet.
     */
     public void step(Direction requested) {
-        if (gameOver) return;
+        if (state != GameState.PLAYING) return;
 
         //opdater retning men forbyder en 180 graders vending
         if (requested != null && requested != dir.opposite()) {
@@ -108,7 +108,7 @@ public final class GameModel {
         if (occupied.contains(nextHead)) {
             boolean intoTail = nextHead.equals(tail);
             if (!(intoTail && !grows)) {
-                gameOver = true;
+                state = GameState.GAME_OVER;
                 return;
             }
         }
@@ -144,7 +144,7 @@ public final class GameModel {
 
         // håndterer tilfælde: ingen tomme felter
         if (occupied.size() == rows * cols) {
-            gameOver = true;
+            state = GameState.GAME_OVER;
             return;
         }
 
@@ -182,7 +182,8 @@ public final class GameModel {
     }
     public Cell getFood() { return food; }
     public int getScore() { return score; }
-    public boolean isGameOver() { return gameOver; }
+    public GameState getState() { return state; }
+    public boolean isGameOver() { return state == GameState.GAME_OVER; }
     public Direction getDirection() { return dir; }
     public int getCols() { return cols; }
     public int getRows() { return rows; }
