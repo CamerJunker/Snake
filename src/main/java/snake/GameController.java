@@ -12,7 +12,7 @@ public class GameController extends KeyAdapter implements ActionListener{
     private final SnakePanel panel;
     private Boolean running = false; 
     private Timer timer;
-    private final int DELAY = 75; // Speed of snake
+    private final int DELAY = 100; // Speed of snake
 
     private Direction currentDirection;
 
