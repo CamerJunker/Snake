@@ -4,8 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter; // React to keys
 import java.awt.event.KeyEvent; // Create key event
-import javax.swing.Timer;
-//import java.util.Timer; // Create a timer
+import javax.swing.Timer; // Create a timer
 
 public class GameController extends KeyAdapter implements ActionListener{
 
@@ -28,13 +27,12 @@ public class GameController extends KeyAdapter implements ActionListener{
         this.currentDirection = model.getDirection();
 
         // Create a timer
-        timer = new Timer(DELAY,this);
+        timer = new Timer(DELAY,this);        
 
         // Start timer, useful instead of a while-loop
         timer.start();
     }
 
-    // Update the current direction to key pressed
     @Override
     public void keyPressed(KeyEvent e) {
         // Return this function if the game is over
@@ -48,15 +46,15 @@ public class GameController extends KeyAdapter implements ActionListener{
             case KeyEvent.VK_RIGHT -> Direction.RIGHT;
 
             // The default is always the current direction
-            default -> this.currentDirection;
+            default -> currentDirection;
         };
 
         // Check if the key is opposite to the current direction
         if (isOpposite(next, currentDirection)) return;
 
         // Update current direction to the key pressed
-        this.currentDirection = next;
-    }
+        currentDirection = next;
+    }        
 
     // Function to move snake and repaint canvas
     public void move() {
@@ -100,4 +98,5 @@ public class GameController extends KeyAdapter implements ActionListener{
             timer.stop();
         }
     }
+
 }

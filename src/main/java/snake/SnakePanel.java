@@ -1,6 +1,5 @@
 package snake;
 
-
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -58,9 +57,6 @@ public class SnakePanel extends JPanel {
                 CELL_SIZE
             );
         }
-
-        // Tegner "Game Over"
-
     }
 
 }

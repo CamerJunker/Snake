@@ -2,12 +2,14 @@ package snake;
 
 import javax.swing.JFrame;
 
-public class GameView extends JFrame {
+public class GameView extends JFrame{
+
+    private GameController controller;
 
     public GameView(int n, int m) {
         GameModel model = new GameModel(n, m);
         SnakePanel panel = new SnakePanel(model);
-        GameController controller = new GameController(model, panel);
+        controller = new GameController(model, panel);
 
         this.add(panel);
 
@@ -15,7 +17,7 @@ public class GameView extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
 
-        panel.addKeyListener(controller);
+        panel.addKeyListener(controller); 
 
         this.pack();
         this.setLocationRelativeTo(null);
@@ -23,5 +25,7 @@ public class GameView extends JFrame {
 
         // fokus efter vinduet er synligt
         panel.requestFocusInWindow();
+
     }
+
 }

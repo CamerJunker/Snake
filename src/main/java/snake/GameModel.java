@@ -32,7 +32,6 @@ public final class GameModel {
             throw new IllegalArgumentException( "n og m skal være i [5..100]");
         }
 
-
         // Lav spilbræt
         this.rows = n;
         this.cols = m;
