@@ -57,6 +57,7 @@ public class SnakePanel extends JPanel {
                 CELL_SIZE
             );
         }
+
     }
 
 }

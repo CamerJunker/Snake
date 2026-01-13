@@ -1,38 +1,36 @@
 package snake;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.Timer;
 import java.awt.event.KeyAdapter; // React to keys
 import java.awt.event.KeyEvent; // Create key event
-import javax.swing.Timer; // Create a timer
 
-public class GameController extends KeyAdapter implements ActionListener{
+public class GameController extends KeyAdapter {
+    // GameModel object
+    private GameModel model;
 
-    private final GameModel model;
-    private final SnakePanel panel;
-    private Boolean running = false; 
+    // SnakePanel object
+    //private SnakePanel Spanel;
     private Timer timer;
-    private final int DELAY = 100; // Speed of snake
 
+    // Variable to hold current direction
     private Direction currentDirection;
 
-    public GameController(GameModel model, SnakePanel panel) {
+    // Initialize GameController object
+    // Receive GameModel and SnakePanel object as parameters
+    public GameController(GameModel model, SnakePanel panel, Timer timer) {
+        // Assign GameModel object to variable
         this.model = model;
-        this.panel = panel;
 
-        // Make the game start running
-        running = true;
+        // Assign SnakePanel object to variable
+        //SnakePanel Spanel = panel;
+
+        this.timer = timer;
 
         // Get direction from GameModel
         this.currentDirection = model.getDirection();
-
-        // Create a timer
-        timer = new Timer(DELAY,this);        
-
-        // Start timer, useful instead of a while-loop
-        timer.start();
     }
 
+    // Every time one of the arrow keys are pressed, the direction variable is changed
     @Override
     public void keyPressed(KeyEvent e) {
         // Return this function if the game is over
@@ -56,24 +54,18 @@ public class GameController extends KeyAdapter implements ActionListener{
         currentDirection = next;
     }        
 
-    // Function to move snake and repaint canvas
+    // Function to move snake
     public void move() {
-        if(running) {
+        // Call GameModel step() function with the current direction
+        model.step(currentDirection);
 
-            // Call GameModel step() function with the current direction
-            model.step(currentDirection);
+        // Check if the game is over
+        Boolean isGameOver = model.isGameOver();
 
-            // Repaint the panel
-            panel.repaint();
-
-            // Check if the game is over
-            Boolean isGameOver = model.isGameOver();
-
-            // If the game is over, change panel to 
-            if (isGameOver) {
-                // Change running to false
-                running = false;
-            }
+        // If the game is over, change panel to 
+        if (isGameOver) {
+            // Stop timer
+            timer.stop();
         }
     }
 
@@ -84,19 +76,6 @@ public class GameController extends KeyAdapter implements ActionListener{
             || (a == Direction.DOWN && b == Direction.UP)
             || (a == Direction.LEFT && b == Direction.RIGHT)
             || (a == Direction.RIGHT && b == Direction.LEFT);
-    }
-
-    // Function running according to timer
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-        // If game is still running, move snake
-        if(running) {
-            move();
-        } else {
-            // Stop timer
-            timer.stop();
-        }
     }
 
 }
