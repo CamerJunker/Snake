@@ -9,7 +9,7 @@ public class GameController extends KeyAdapter {
     private GameModel model;
 
     // SnakePanel object
-    //private SnakePanel Spanel;
+    // private SnakePanel Spanel;
     private Timer timer;
 
     // Variable to hold current direction
@@ -21,9 +21,7 @@ public class GameController extends KeyAdapter {
         // Assign GameModel object to variable
         this.model = model;
 
-        // Assign SnakePanel object to variable
-        //SnakePanel Spanel = panel;
-
+        // Assign timer parameter to variable
         this.timer = timer;
 
         // Get direction from GameModel

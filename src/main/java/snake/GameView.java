@@ -4,7 +4,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 import java.awt.event.ActionEvent;
-//import javax.swing.Timer; // Create a timer
 
 public class GameView extends JFrame implements ActionListener{
 
@@ -46,6 +45,7 @@ public class GameView extends JFrame implements ActionListener{
     }
 
     // Function to move snake repeated according to timer
+    // This function is placed here, so the frame can be repainted.
     @Override
     public void actionPerformed(ActionEvent e) {
         // Move snake
