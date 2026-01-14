@@ -12,8 +12,8 @@ public class GameController extends KeyAdapter {
     // private SnakePanel Spanel;
     private Timer timer;
 
-    // Variable to hold current direction
-    private Direction currentDirection;
+    // Latest requested direction (applied on the next tick)
+    private Direction requestedDirection;
 
     // Initialize GameController object
     // Receive GameModel and SnakePanel object as parameters
@@ -24,8 +24,8 @@ public class GameController extends KeyAdapter {
         // Assign timer parameter to variable
         this.timer = timer;
 
-        // Get direction from GameModel
-        this.currentDirection = model.getDirection();
+        // Start with no pending input; model direction drives default movement
+        this.requestedDirection = null;
     }
 
     // Every time one of the arrow keys are pressed, the direction variable is changed
@@ -42,20 +42,22 @@ public class GameController extends KeyAdapter {
             case KeyEvent.VK_RIGHT -> Direction.RIGHT;
 
             // The default is always the current direction
-            default -> currentDirection;
+            default -> (requestedDirection != null ? requestedDirection : model.getDirection());
         };
 
-        // Check if the key is opposite to the current direction
-        if (isOpposite(next, currentDirection)) return;
+        // Check if the key is opposite to the current (or pending) direction
+        Direction base = (requestedDirection != null) ? requestedDirection : model.getDirection();
+        if (isOpposite(next, base)) return;
 
-        // Update current direction to the key pressed
-        currentDirection = next;
+        // Store direction request to be applied on the next move tick
+        requestedDirection = next;
     }        
 
     // Function to move snake
     public void move() {
-        // Call GameModel step() function with the current direction
-        model.step(currentDirection);
+        // Call GameModel step() function with the pending direction
+        model.step(requestedDirection);
+        requestedDirection = null;
 
         // Check if the game is over
         Boolean isGameOver = model.isGameOver();
