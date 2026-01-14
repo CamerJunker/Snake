@@ -18,7 +18,9 @@ public class GameController extends KeyAdapter {
     // hvor meget hurtigere pr. mad
     private static final int SPEEDUP_MS = 10;    
     // maks hastighed (laveste delay)  
-    private static final int MIN_DELAY_MS = 60;   
+    private static final int MIN_DELAY_MS = 120;  
+    private int lastScore = 0;                    // husker score, så vi kun speedupper én gang pr. prik
+ 
 
     // Initialize GameController object
     // Receive GameModel and SnakePanel object as parameters
@@ -59,18 +61,22 @@ public class GameController extends KeyAdapter {
 
     // Function to move snake
     public void move() {
-        // Acceleration (NYT): mål score før step 
-        int beforeScore = model.getScore();
+        if (model.isGameOver()) {
+        timer.stop();
+        return;
+        }
 
         // Call GameModel step() function with the current direction
         model.step(currentDirection);
 
-        // --- Acceleration (NYT): hvis score steg, så gør timer hurtigere ---
-        int afterScore = model.getScore();
-        if (afterScore > beforeScore) {
-            int newDelay = Math.max(MIN_DELAY_MS, timer.getDelay() - SPEEDUP_MS);
-            timer.setDelay(newDelay);
-        
+        // Hvis vi har spist en prik, så øg hastigheden én gang
+        int scoreNow = model.getScore();
+        if (scoreNow > lastScore) {
+        lastScore = scoreNow;
+
+        int newDelay = Math.max(MIN_DELAY_MS, timer.getDelay() - SPEEDUP_MS);
+        timer.setDelay(newDelay);
+        timer.setInitialDelay(newDelay); // gør det mere stabilt i Swing
         }
 
         // If the game is over, change panel to 
