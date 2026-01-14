@@ -47,7 +47,7 @@ public class GameController extends KeyAdapter {
 
         // Check if the key is opposite to the current (or pending) direction
         Direction base = (requestedDirection != null) ? requestedDirection : model.getDirection();
-        if (isOpposite(next, base)) return;
+        if (next == base.opposite()) return;
 
         // Store direction request to be applied on the next move tick
         requestedDirection = next;
@@ -67,15 +67,6 @@ public class GameController extends KeyAdapter {
             // Stop timer
             timer.stop();
         }
-    }
-
-    // Function to check if current direction is the opposite
-    private boolean isOpposite(Direction a, Direction b) {
-        // Returns true if direction a is the opposite to direction b
-        return (a == Direction.UP && b == Direction.DOWN)
-            || (a == Direction.DOWN && b == Direction.UP)
-            || (a == Direction.LEFT && b == Direction.RIGHT)
-            || (a == Direction.RIGHT && b == Direction.LEFT);
     }
 
 }
