@@ -15,6 +15,11 @@ public class GameController extends KeyAdapter {
     // Variable to hold current direction
     private Direction currentDirection;
 
+    // hvor meget hurtigere pr. mad
+    private static final int SPEEDUP_MS = 10;    
+    // maks hastighed (laveste delay)  
+    private static final int MIN_DELAY_MS = 60;   
+
     // Initialize GameController object
     // Receive GameModel and SnakePanel object as parameters
     public GameController(GameModel model, SnakePanel panel, Timer timer) {
@@ -54,14 +59,22 @@ public class GameController extends KeyAdapter {
 
     // Function to move snake
     public void move() {
+        // Acceleration (NYT): mål score før step 
+        int beforeScore = model.getScore();
+
         // Call GameModel step() function with the current direction
         model.step(currentDirection);
 
-        // Check if the game is over
-        Boolean isGameOver = model.isGameOver();
+        // --- Acceleration (NYT): hvis score steg, så gør timer hurtigere ---
+        int afterScore = model.getScore();
+        if (afterScore > beforeScore) {
+            int newDelay = Math.max(MIN_DELAY_MS, timer.getDelay() - SPEEDUP_MS);
+            timer.setDelay(newDelay);
+        
+        }
 
         // If the game is over, change panel to 
-        if (isGameOver) {
+        if (model.isGameOver()) {
             // Stop timer
             timer.stop();
         }
