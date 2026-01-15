@@ -76,7 +76,7 @@ public class PopupMenu extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == ChangeGridSize){
-            System.out.println(rowEntry.getText() + " " + colEntry.getText());
+
             String rowEntryVariable = rowEntry.getText();
             String colEntryVariable = colEntry.getText();
             int rowVar;
@@ -90,7 +90,7 @@ public class PopupMenu extends JFrame implements ActionListener{
                 colVar = 0;
             }
 
-            if (rowVar != 0 && colVar != 0) {
+            if (rowVar <= 100 && rowVar >= 5 && colVar <= 100 && colVar >= 5) {
                 MainApp.startGame(rowVar, colVar, gview, mainApp);
             }
 
