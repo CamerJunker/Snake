@@ -35,6 +35,7 @@ public class PopupMenu extends JFrame implements ActionListener{
     private MainApp mainApp;
 
     PopupMenu(GameView gameview, MainApp main) {
+
         mainApp = main;
 
         // Create window

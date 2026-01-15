@@ -87,4 +87,10 @@ public class GameController extends KeyAdapter {
         }
     }
 
+    // Pause Game
+    public void pause() {timer.stop();}
+
+    // Unpause Game
+    public void unPause() {timer.start();}
+
 }

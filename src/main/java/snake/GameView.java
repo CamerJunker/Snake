@@ -84,6 +84,7 @@ public class GameView extends JFrame implements ActionListener{
             // If the popup menu isn't already made
             if (popupMenu == null) {
                 // Create window
+                controller.pause();
                 popupMenu = new PopupMenu(this, mainApp);
 
             // If the popup menu is already made
@@ -97,6 +98,9 @@ public class GameView extends JFrame implements ActionListener{
     public void ClosePopupMenu(){
         // First dispose of window
         popupMenu.dispose();
+
+        // Restart GameController
+        controller.unPause();
 
         // Then set variable to null
         popupMenu = null;
