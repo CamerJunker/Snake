@@ -19,7 +19,7 @@ public class GameView extends JFrame implements ActionListener{
     public GameView(int n, int m) {
         GameModel model = new GameModel(n, m);
         panel = new SnakePanel(model);
-        controller = new GameController(model, panel, timer);
+        
 
         this.add(panel);
 
@@ -27,7 +27,6 @@ public class GameView extends JFrame implements ActionListener{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
 
-        panel.addKeyListener(controller); 
 
         this.pack();
         this.setLocationRelativeTo(null);
@@ -37,7 +36,11 @@ public class GameView extends JFrame implements ActionListener{
         panel.requestFocusInWindow();
 
         // Create a timer
-        timer = new Timer(DELAY,this);        
+        timer = new Timer(DELAY, this);        
+
+        // Opret controller EFTER timeren findes
+        controller = new GameController(model, panel, timer);
+        panel.addKeyListener(controller);
 
         // Start timer, useful instead of a while-loop
         timer.start();

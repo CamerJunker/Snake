@@ -15,11 +15,10 @@ public class GameController extends KeyAdapter {
     // Variable to hold current direction
     private Direction currentDirection;
 
-    // hvor meget hurtigere pr. mad
-    private static final int SPEEDUP_MS = 10;    
-    // maks hastighed (laveste delay)  
-    private static final int MIN_DELAY_MS = 120;  
-    private int lastScore = 0;                    // husker score, så vi kun speedupper én gang pr. prik
+    // Acceleration: gør spillet hurtigere når man spiser 
+    private int lastScore = 0;                 // husker sidste score
+    private static final int SPEEDUP_MS = 5;   // hvor meget hurtigere pr. mad
+    private static final int MIN_DELAY_MS = 40; // laveste delay (max hastighed)
  
 
     // Initialize GameController object
@@ -72,11 +71,10 @@ public class GameController extends KeyAdapter {
         // Hvis vi har spist en prik, så øg hastigheden én gang
         int scoreNow = model.getScore();
         if (scoreNow > lastScore) {
-        lastScore = scoreNow;
+            lastScore = scoreNow;
 
         int newDelay = Math.max(MIN_DELAY_MS, timer.getDelay() - SPEEDUP_MS);
-        timer.setDelay(newDelay);
-        timer.setInitialDelay(newDelay); // gør det mere stabilt i Swing
+        timer.setDelay(newDelay);  
         }
 
         // If the game is over, change panel to 
