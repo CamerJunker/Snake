@@ -110,4 +110,7 @@ public class SnakePanel extends JPanel {
 
     }
 
+    // Getters for visse variabler
+    public int getCellSize() {return CELL_SIZE;}
+    public int getHUDheight() {return HUD_HEIGHT;}
 }
