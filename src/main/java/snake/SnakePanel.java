@@ -47,15 +47,15 @@ public class SnakePanel extends JPanel {
         // Alt skal helst tegnes med dette!
         Graphics2D g2d = (Graphics2D) bufferedGraphics;
 
-        // clear background
+        //Rydder baggrunden
         g2d.setColor(DARK_GREEN);
         g2d.fillRect(0, 0, boardWidth, boardHeight + HUD_HEIGHT);
 
-        // HUD background
+        // HUD-baggrunden
         g2d.setColor(new Color(30, 30, 30));
         g2d.fillRect(0, 0, boardWidth, HUD_HEIGHT);
 
-        // HUD text
+        // HUD-teksten
         g2d.setColor(Color.WHITE);
         g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 12f));
         String hudText = "Score: " + model.getScore() + "   State: " + model.getState();

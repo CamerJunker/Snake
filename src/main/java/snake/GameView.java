@@ -5,16 +5,16 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 
-public class GameView extends JFrame implements ActionListener{
+public class GameView extends JFrame implements ActionListener {
 
     private GameController controller;
     private SnakePanel panel;
 
-    // Timer instead of while-loop for game
+    // timeren bruges til at atyre spillets tick
     private Timer timer;
 
-    // Delay variable for timer
-    private final int DELAY = 100; // Speed of snake
+    // starthastigheden for slangen
+    private final int DELAY = 100;
 
     public GameView(int n, int m) {
         GameModel model = new GameModel(n, m);
@@ -35,25 +35,20 @@ public class GameView extends JFrame implements ActionListener{
         // fokus efter vinduet er synligt
         panel.requestFocusInWindow();
 
-        // Create a timer
         timer = new Timer(DELAY, this);        
 
         // Opret controller EFTER timeren findes
         controller = new GameController(model, panel, timer);
         panel.addKeyListener(controller);
 
-        // Start timer, useful instead of a while-loop
         timer.start();
 
     }
 
-    // Function to move snake repeated according to timer
-    // This function is placed here, so the frame can be repainted.
+    // flytter slangen og bruger repaint til at opdatere visdningen
     @Override
     public void actionPerformed(ActionEvent e) {
-        // Move snake
         controller.move(); 
-        // Repaint the panel
         this.repaint();
     }
 
