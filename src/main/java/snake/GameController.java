@@ -12,8 +12,8 @@ public class GameController extends KeyAdapter {
     // private SnakePanel Spanel;
     private Timer timer;
 
-    // Variable to hold current direction
-    private Direction currentDirection;
+    // Latest requested direction (applied on the next tick)
+    private Direction requestedDirection;
 
     // Acceleration: gør spillet hurtigere når man spiser 
     private int lastScore = 0;                 // husker sidste score
@@ -30,8 +30,8 @@ public class GameController extends KeyAdapter {
         // Assign timer parameter to variable
         this.timer = timer;
 
-        // Get direction from GameModel
-        this.currentDirection = model.getDirection();
+        // Start with no pending input; model direction drives default movement
+        this.requestedDirection = null;
     }
 
     // Every time one of the arrow keys are pressed, the direction variable is changed
@@ -48,14 +48,16 @@ public class GameController extends KeyAdapter {
             case KeyEvent.VK_RIGHT -> Direction.RIGHT;
 
             // The default is always the current direction
-            default -> currentDirection;
+            default -> (requestedDirection != null ? requestedDirection : model.getDirection());
         };
 
-        // Check if the key is opposite to the current direction
-        if (isOpposite(next, currentDirection)) return;
+        // Check if the key is opposite to the current (or pending) direction
+        Direction base = (requestedDirection != null) ? requestedDirection : model.getDirection();
+        if (next == base) return;
+        if (next == base.opposite()) return;
 
-        // Update current direction to the key pressed
-        currentDirection = next;
+        // Store direction request to be applied on the next move tick
+        requestedDirection = next;
     }        
 
     // Function to move snake
@@ -66,7 +68,10 @@ public class GameController extends KeyAdapter {
         }
 
         // Call GameModel step() function with the current direction
-        model.step(currentDirection);
+        model.step(requestedDirection);
+        // Call GameModel step() function with the pending direction
+        model.step(requestedDirection);
+        requestedDirection = null;
 
         // Hvis vi har spist en prik, så øg hastigheden én gang
         int scoreNow = model.getScore();
@@ -82,15 +87,6 @@ public class GameController extends KeyAdapter {
             // Stop timer
             timer.stop();
         }
-    }
-
-    // Function to check if current direction is the opposite
-    private boolean isOpposite(Direction a, Direction b) {
-        // Returns true if direction a is the opposite to direction b
-        return (a == Direction.UP && b == Direction.DOWN)
-            || (a == Direction.DOWN && b == Direction.UP)
-            || (a == Direction.LEFT && b == Direction.RIGHT)
-            || (a == Direction.RIGHT && b == Direction.LEFT);
     }
 
 }

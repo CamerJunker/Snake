@@ -141,37 +141,23 @@ public final class GameModel {
 
     //Placér mad tilfældigt, udenfor slangens krop
     private void setFood() {
-
-        // håndterer tilfælde: ingen tomme felter
         if (occupied.size() == rows * cols) {
             state = GameState.GAME_OVER;
             return;
         }
 
-        // Find en celle der ikke er optaget af slangens krop
-        int XVærdi, YVærdi;
-        Cell FoodCell;
-
-        // While-loop kører indtil ubrugt celle er fundet
-        while(true){
-            // Brug random generator til at lave nogle tilfældige koordinator
-            YVærdi = rng.nextInt(this.rows);
-            XVærdi = rng.nextInt(this.cols);
-        
-            // Initialisér celle med fundne koordinater
-            FoodCell = new Cell(YVærdi, XVærdi);
-
-            // Tjek om celle findes i slangens krop
-            if (this.occupied.contains(FoodCell)) {
-                continue;
-            } else {
-                break;
+        List<Cell> free = new ArrayList<>(rows * cols - occupied.size());
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                Cell candidate = new Cell(r, c);
+                if (!occupied.contains(candidate)) {
+                    free.add(candidate);
+                }
             }
-
         }
 
-        // Initialisér mad i den fundne tilgængelige celle
-        this.food = FoodCell;
+        int pick = rng.nextInt(free.size());
+        this.food = free.get(pick);
     }
 
     //getters så at Controller/View også kan bruge modellen
@@ -188,3 +174,4 @@ public final class GameModel {
     public int getCols() { return cols; }
     public int getRows() { return rows; }
 }
+
