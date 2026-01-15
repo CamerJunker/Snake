@@ -17,8 +17,8 @@ public class GameController extends KeyAdapter {
 
     // Acceleration: gør spillet hurtigere når man spiser 
     private int lastScore = 0;                 // husker sidste score
-    private static final int SPEEDUP_MS = 5;   // hvor meget hurtigere pr. mad
-    private static final int MIN_DELAY_MS = 40; // laveste delay (max hastighed)
+    private static final int SPEEDUP_MS = 2;   // hvor meget hurtigere pr. mad
+    private static final int MIN_DELAY_MS = 50; // laveste delay (max hastighed)
  
 
     // Initialize GameController object
@@ -67,8 +67,6 @@ public class GameController extends KeyAdapter {
         return;
         }
 
-        // Call GameModel step() function with the current direction
-        model.step(requestedDirection);
         // Call GameModel step() function with the pending direction
         model.step(requestedDirection);
         requestedDirection = null;
