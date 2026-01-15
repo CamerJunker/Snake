@@ -80,16 +80,23 @@ public class GameView extends JFrame implements ActionListener{
             // If the popup menu isn't already made
             if (popupMenu == null) {
                 // Create window
-                popupMenu = new PopupMenu();
+                popupMenu = new PopupMenu(panel, this);
+
 
             // If the popup menu is already made
             } else {
                 // Close window
                 popupMenu.dispose();
                 // Set variable to null
-                popupMenu = null;
+                setMenuNull();
+                panel.requestFocusInWindow();
             }
         }
+    }
+
+    // For at sætte variablen til null i PopupMenu klassen
+    public void setMenuNull(){
+        popupMenu = null;
     }
 
 }

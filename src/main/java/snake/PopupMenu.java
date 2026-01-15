@@ -1,7 +1,7 @@
 package snake;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,12 +17,21 @@ public class PopupMenu extends JFrame implements ActionListener{
     JTextField rowEntry = new  JTextField();
     JTextField colEntry = new  JTextField();
 
+    JButton ExitButton = new JButton("Exit");
+
+    SnakePanel Gamepanel;
+
+    GameView gview;
+
     JButton ChangeGridSize = new JButton("Change Grid Size");
 
-    PopupMenu() {
+    PopupMenu(SnakePanel panel, GameView gameview) {
         // Create window
         
-        this.setLayout((new FlowLayout()));
+        Gamepanel = panel;
+        gview = gameview;
+
+        this.setLayout((new GridLayout()));
 
         label.setFont(new Font(null,Font.PLAIN, 25));
 
@@ -30,16 +39,17 @@ public class PopupMenu extends JFrame implements ActionListener{
         colEntry.setPreferredSize(new Dimension(250, 40));
 
         ChangeGridSize.addActionListener(this);
+        ExitButton.addActionListener(this);
 
+        this.add(ExitButton);
         this.add(rowEntry);
         this.add(colEntry);
         this.add(ChangeGridSize);
         this.add(label);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setSize(400,400);
         this.setVisible(true);
-
-        
+        this.setResizable(false);
 
     }
 
@@ -47,7 +57,15 @@ public class PopupMenu extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == ChangeGridSize){
             System.out.println(rowEntry.getText() + " " + colEntry.getText());
+        } else if (e.getSource() == ExitButton) {
+            closeWindow();
         }
+    }
+
+    public void closeWindow(){
+        gview.setMenuNull();
+        Gamepanel.requestFocusInWindow();
+        this.dispose();
     }
 
 }
