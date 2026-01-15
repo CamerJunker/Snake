@@ -23,7 +23,11 @@ public class GameView extends JFrame implements ActionListener{
 
     private PopupMenu popupMenu = null;
 
-    public GameView(int n, int m) {
+    private MainApp mainApp;
+
+    public GameView(int n, int m, MainApp main) {
+        mainApp = main;
+
         GameModel model = new GameModel(n, m);
         panel = new SnakePanel(model);
 
@@ -80,23 +84,30 @@ public class GameView extends JFrame implements ActionListener{
             // If the popup menu isn't already made
             if (popupMenu == null) {
                 // Create window
-                popupMenu = new PopupMenu(panel, this);
-
+                popupMenu = new PopupMenu(this, mainApp);
 
             // If the popup menu is already made
             } else {
-                // Close window
-                popupMenu.dispose();
-                // Set variable to null
-                setMenuNull();
-                panel.requestFocusInWindow();
+                ClosePopupMenu();
             }
         }
     }
 
     // For at sætte variablen til null i PopupMenu klassen
-    public void setMenuNull(){
+    public void ClosePopupMenu(){
+        // First dispose of window
+        popupMenu.dispose();
+
+        // Then set variable to null
         popupMenu = null;
+
+        // Then return focus to panel
+        panel.requestFocusInWindow();
+    }
+
+    // For at lukke gameview fra andre klasser
+    public void CloseGameView() {
+        this.dispose();
     }
 
 }
