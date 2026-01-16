@@ -73,7 +73,10 @@ public class GameView extends JFrame implements ActionListener {
         controller.move(); 
         this.repaint();
         
-
+        // Hvis spiltilstanden er WON, ændres vinduets titel for at vise at spilleren har vundet
+        if (controller.getModel().getState() == GameState.WON) {
+        setTitle("DU VANDT! - yayyyyyy");
+}
         // If Menu Button pressed
         if (e.getSource() == MenuButton) {
 

@@ -75,4 +75,9 @@ public class GameController extends KeyAdapter {
     // Unpause Game
     public void unPause() {timer.start();}
 
+    // Returnerer GameModel, så View kan læse spillets tilstand (f.eks. WON eller GAME_OVER)
+    public GameModel getModel() {
+    return model;
+    }
+
 }
