@@ -19,7 +19,7 @@ public class GameView extends JFrame implements ActionListener {
     private final int DELAY = 100;
 
     // Menu Button
-    private JButton MenuButton = new JButton("...");
+    private JButton MenuButton = new JButton("Menu(ESC)");
 
     private PopupMenu popupMenu = null;
 
@@ -38,7 +38,9 @@ public class GameView extends JFrame implements ActionListener {
         // Add Menu Button
         this.add(MenuButton);
         // Set location and size of button
-        MenuButton.setBounds(n*(CellSize-1)-4, 4, n, HUDheight-8);
+        int menuWidth = MenuButton.getPreferredSize().width + 10;
+        MenuButton.setBounds(n*(CellSize-1)-menuWidth-4, 2, menuWidth, HUDheight-4);
+        MenuButton.setToolTipText("åbn menuen");
         
         MenuButton.addActionListener(this);
 
@@ -59,7 +61,7 @@ public class GameView extends JFrame implements ActionListener {
         timer = new Timer(DELAY, this);        
 
         // Opret controller EFTER timeren findes
-        controller = new GameController(model, panel, timer);
+        controller = new GameController(model, panel, timer, this);
         panel.addKeyListener(controller);
 
         timer.start();
@@ -79,17 +81,7 @@ public class GameView extends JFrame implements ActionListener {
 }
         // If Menu Button pressed
         if (e.getSource() == MenuButton) {
-
-            // If the popup menu isn't already made
-            if (popupMenu == null) {
-                // Create window
-                controller.pause();
-                popupMenu = new PopupMenu(this, mainApp);
-
-            // If the popup menu is already made
-            } else {
-                ClosePopupMenu();
-            }
+            toggleMenu();
         }
     }
 
@@ -106,11 +98,34 @@ public class GameView extends JFrame implements ActionListener {
 
         // Then return focus to panel
         panel.requestFocusInWindow();
+        this.repaint();
     }
 
     // For at lukke gameview fra andre klasser
     public void CloseGameView() {
         this.dispose();
+    }
+
+    // Genstart spillet uden at lave et nyt vindue
+    public void restartGame() {
+        controller.resetGame();
+        this.repaint();
+        panel.requestFocusInWindow();
+    }
+
+    //brugt af både knap og ESC
+    public void setDifficulty(Difficulty difficulty) {
+        controller.setDifficulty(difficulty);
+    }
+
+    public void toggleMenu() {
+        if (popupMenu == null) {
+            controller.pause();
+            popupMenu = new PopupMenu(this, mainApp);
+            this.repaint();
+        } else {
+            ClosePopupMenu();
+        }
     }
 
 }
