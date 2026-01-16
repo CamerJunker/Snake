@@ -95,6 +95,7 @@ public class GameView extends JFrame implements ActionListener {
 
         // Then return focus to panel
         panel.requestFocusInWindow();
+        this.repaint();
     }
 
     // For at lukke gameview fra andre klasser
@@ -114,6 +115,7 @@ public class GameView extends JFrame implements ActionListener {
         if (popupMenu == null) {
             controller.pause();
             popupMenu = new PopupMenu(this, mainApp);
+            this.repaint();
         } else {
             ClosePopupMenu();
         }

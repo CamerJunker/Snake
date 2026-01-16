@@ -79,10 +79,16 @@ public class GameController extends KeyAdapter {
     }
 
     // Pause Game
-    public void pause() {timer.stop();}
+    public void pause() {
+        model.pause();
+        timer.stop();
+    }
 
     // Unpause Game
-    public void unPause() {timer.start();}
+    public void unPause() {
+        model.resume();
+        timer.start();
+    }
 
     // Restart game and reset speed
     public void resetGame() {

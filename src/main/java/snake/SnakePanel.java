@@ -103,6 +103,17 @@ public class SnakePanel extends JPanel {
             int textX = (boardWidth - fm.stringWidth(gameOver)) / 2;
             int textY = HUD_HEIGHT + (boardHeight / 2) - fm.getHeight() / 2 + fm.getAscent();
             g2d.drawString(gameOver, textX, textY);
+        } else if (model.getState() == GameState.PAUSED) {
+            g2d.setColor(new Color(0, 0, 0, 120));
+            g2d.fillRect(0, HUD_HEIGHT, boardWidth, boardHeight);
+
+            g2d.setColor(Color.WHITE);
+            g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 18f));
+            String paused = "Paused";
+            FontMetrics fm = g2d.getFontMetrics();
+            int textX = (boardWidth - fm.stringWidth(paused)) / 2;
+            int textY = HUD_HEIGHT + (boardHeight / 2) - fm.getHeight() / 2 + fm.getAscent();
+            g2d.drawString(paused, textX, textY);
         }
 
         // Her tegnes det endeligt!

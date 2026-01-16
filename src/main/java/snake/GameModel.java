@@ -178,4 +178,16 @@ public final class GameModel {
     public long getElapsedSeconds() {
         return (System.currentTimeMillis() - startTimeMs) / 1000;
     }
+
+    public void pause() {
+        if (state == GameState.PLAYING) {
+            state = GameState.PAUSED;
+        }
+    }
+
+    public void resume() {
+        if (state == GameState.PAUSED) {
+            state = GameState.PLAYING;
+        }
+    }
 }
