@@ -111,6 +111,10 @@ public class GameView extends JFrame implements ActionListener {
     }
 
     //brugt af både knap og ESC
+    public void setDifficulty(Difficulty difficulty) {
+        controller.setDifficulty(difficulty);
+    }
+
     public void toggleMenu() {
         if (popupMenu == null) {
             controller.pause();

@@ -7,7 +7,7 @@ import java.awt.event.KeyEvent;
 public class GameController extends KeyAdapter {
     private GameModel model;
     private Timer timer;
-    private final int baseDelayMs;
+    private int baseDelayMs;
     private GameView view;
 
     // det seneste input, som så bliver brugt ved næste tick
@@ -15,7 +15,7 @@ public class GameController extends KeyAdapter {
 
     // Acceleration: gør spillet hurtigere når man spiser 
     private int lastScore = 0;                 // husker sidste score
-    private static final int SPEEDUP_MS = 2;   // hvor meget hurtigere slangen bliver hver gang mad bliver spist
+    private int speedupMs = 2;   // hvor meget hurtigere slangen bliver hver gang mad bliver spist
     private static final int MIN_DELAY_MS = 50; // laveste delay (max hastighed som slangen kan opnå)
  
 
@@ -69,7 +69,7 @@ public class GameController extends KeyAdapter {
         if (scoreNow > lastScore) {
             lastScore = scoreNow;
 
-            int newDelay = Math.max(MIN_DELAY_MS, timer.getDelay() - SPEEDUP_MS);
+            int newDelay = Math.max(MIN_DELAY_MS, timer.getDelay() - speedupMs);
             timer.setDelay(newDelay);  
         }
 
@@ -97,6 +97,14 @@ public class GameController extends KeyAdapter {
         lastScore = 0;
         timer.setDelay(baseDelayMs);
         timer.start();
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        if (difficulty == null) return;
+        baseDelayMs = difficulty.getBaseDelayMs();
+        speedupMs = difficulty.getSpeedupMs();
+        lastScore = model.getScore();
+        timer.setDelay(baseDelayMs);
     }
 
 }
