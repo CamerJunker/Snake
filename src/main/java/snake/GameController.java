@@ -27,6 +27,8 @@ public class GameController extends KeyAdapter {
         this.baseDelayMs = timer.getDelay();
         this.requestedDirection = null;
         this.view = view;
+        model.setStepDelayMs(timer.getDelay());
+        model.setLastStepTimeMs(System.currentTimeMillis());
         soundManager.load("eat", "/sounds/eat.wav");
         soundManager.load("gameover", "/sounds/gameover.wav");
     }
@@ -82,6 +84,9 @@ public class GameController extends KeyAdapter {
             soundManager.play("gameover");
         }
 
+        model.setStepDelayMs(timer.getDelay());
+        model.setLastStepTimeMs(System.currentTimeMillis());
+
         if (model.isGameOver()) {
             timer.stop();
         }
@@ -105,6 +110,8 @@ public class GameController extends KeyAdapter {
         requestedDirection = null;
         lastScore = 0;
         timer.setDelay(baseDelayMs);
+        model.setStepDelayMs(baseDelayMs);
+        model.setLastStepTimeMs(System.currentTimeMillis());
         timer.start();
     }
 
@@ -114,6 +121,7 @@ public class GameController extends KeyAdapter {
         speedupMs = difficulty.getSpeedupMs();
         lastScore = model.getScore();
         timer.setDelay(baseDelayMs);
+        model.setStepDelayMs(baseDelayMs);
     }
 
     // Returnerer GameModel, så View kan læse spillets tilstand (f.eks. WON eller GAME_OVER)

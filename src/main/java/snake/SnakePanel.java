@@ -8,6 +8,8 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SnakePanel extends JPanel {
     // Laver en GameModel object
@@ -16,7 +18,7 @@ public class SnakePanel extends JPanel {
     public static final Color DARK_GREEN = new Color(40, 40, 40);
 
     //Celle Størrelsen
-    private static final int CELL_SIZE = 10;
+    private static final int CELL_SIZE = 13;
     private static final int HUD_HEIGHT = 24;
     private static final int HUD_PADDING = 6;
 
@@ -74,9 +76,15 @@ public class SnakePanel extends JPanel {
             );
         }
 
-        // tegner slangen
+        float alpha = getStepAlpha();
+        List<Cell> currentSnake = toList(model.getSnake());
+        List<Cell> previousSnake = toList(model.getPrevSnake());
+
         boolean head = true;
-        for (Cell c : model.getSnake()) {
+        for (int i = 0; i < currentSnake.size(); i++) {
+            Cell current = currentSnake.get(i);
+            Cell previous = (i < previousSnake.size()) ? previousSnake.get(i) : current;
+
             if (head) {
                 g2d.setColor(Color.GREEN.darker()); // hoved
                 head = false;
@@ -84,12 +92,12 @@ public class SnakePanel extends JPanel {
                 g2d.setColor(Color.GREEN); // krop
             }
 
-            g2d.fillRect(
-                c.c() * CELL_SIZE,
-                c.r() * CELL_SIZE + HUD_HEIGHT,
-                CELL_SIZE,
-                CELL_SIZE
-            );
+            float drawRow = interpolateWrapped(previous.r(), current.r(), model.getRows(), alpha);
+            float drawCol = interpolateWrapped(previous.c(), current.c(), model.getCols(), alpha);
+            int x = Math.round(drawCol * CELL_SIZE);
+            int y = Math.round(drawRow * CELL_SIZE) + HUD_HEIGHT;
+
+            g2d.fillRect(x, y, CELL_SIZE, CELL_SIZE);
         }
 
         if (model.isGameOver()) {
@@ -124,4 +132,37 @@ public class SnakePanel extends JPanel {
     // Getters for visse variabler
     public int getCellSize() {return CELL_SIZE;}
     public int getHUDheight() {return HUD_HEIGHT;}
+
+    private float getStepAlpha() {
+        int delayMs = model.getStepDelayMs();
+        if (delayMs <= 0) return 1.0f;
+        long elapsed = System.currentTimeMillis() - model.getLastStepTimeMs();
+        float alpha = elapsed / (float) delayMs;
+        if (alpha < 0.0f) return 0.0f;
+        if (alpha > 1.0f) return 1.0f;
+        return alpha;
+    }
+
+    private float interpolateWrapped(int prev, int current, int size, float t) {
+        int delta = current - prev;
+        if (Math.abs(delta) > 1) {
+            if (delta > 0) {
+                delta -= size;
+            } else {
+                delta += size;
+            }
+        }
+        float value = prev + delta * t;
+        if (value < 0) value += size;
+        if (value >= size) value -= size;
+        return value;
+    }
+
+    private List<Cell> toList(Iterable<Cell> cells) {
+        List<Cell> list = new ArrayList<>();
+        for (Cell c : cells) {
+            list.add(c);
+        }
+        return list;
+    }
 }

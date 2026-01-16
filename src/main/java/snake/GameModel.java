@@ -15,6 +15,7 @@ public final class GameModel {
     // Slangen gemmes i rækkefølge(Deque) og som mængde(Set) for kollisionskontrol
     private final Deque<Cell> snake = new ArrayDeque<>();
     private final Set<Cell> occupied = new HashSet<>();
+    private final Deque<Cell> prevSnake = new ArrayDeque<>();
 
     // den aktuelle spilstatus
     private Direction dir = Direction.LEFT;
@@ -22,6 +23,8 @@ public final class GameModel {
     private int score = 0;
     private GameState state = GameState.PLAYING;
     private long startTimeMs;
+    private long lastStepTimeMs = System.currentTimeMillis();
+    private int stepDelayMs = 100;
 
     // random generator til at placere maden tilfældigt
     private final Random rng = new Random();
@@ -65,6 +68,7 @@ public final class GameModel {
         // Opdater mængden af optagne felter til kollisionskontrol
         occupied.add(head);
         occupied.add(second);
+        snapshotSnake();
 
         // Reset game score
         this.score = 0;
@@ -75,6 +79,7 @@ public final class GameModel {
         // Reset game over
         this.state = GameState.PLAYING;
         this.startTimeMs = System.currentTimeMillis();
+        this.lastStepTimeMs = this.startTimeMs;
 
         // Issue 3: Sæt maden tilfældigt udenfor slangen
         this.setFood();
@@ -86,6 +91,7 @@ public final class GameModel {
     */
     public void step(Direction requested) {
         if (state != GameState.PLAYING) return;
+        snapshotSnake();
 
         //opdater retning men forbyder en 180 graders vending
         if (requested != null && requested != dir.opposite()) {
@@ -174,6 +180,9 @@ public final class GameModel {
     public Iterable<Cell> getSnake() { 
         return Collections.unmodifiableCollection(snake); 
     }
+    public Iterable<Cell> getPrevSnake() {
+        return Collections.unmodifiableCollection(prevSnake);
+    }
     public Cell getFood() { return food; }
     public int getScore() { return score; }
     public GameState getState() { return state; }
@@ -181,6 +190,8 @@ public final class GameModel {
     public Direction getDirection() { return dir; }
     public int getCols() { return cols; }
     public int getRows() { return rows; }
+    public long getLastStepTimeMs() { return lastStepTimeMs; }
+    public int getStepDelayMs() { return stepDelayMs; }
     public long getElapsedSeconds() {
         return (System.currentTimeMillis() - startTimeMs) / 1000;
     }
@@ -195,5 +206,20 @@ public final class GameModel {
         if (state == GameState.PAUSED) {
             state = GameState.PLAYING;
         }
+    }
+
+    public void setLastStepTimeMs(long lastStepTimeMs) {
+        this.lastStepTimeMs = lastStepTimeMs;
+    }
+
+    public void setStepDelayMs(int stepDelayMs) {
+        if (stepDelayMs > 0) {
+            this.stepDelayMs = stepDelayMs;
+        }
+    }
+
+    private void snapshotSnake() {
+        prevSnake.clear();
+        prevSnake.addAll(snake);
     }
 }

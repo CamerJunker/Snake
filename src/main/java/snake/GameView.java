@@ -14,9 +14,11 @@ public class GameView extends JFrame implements ActionListener {
 
     // timeren bruges til at atyre spillets tick
     private Timer timer;
+    private Timer renderTimer;
 
     // starthastigheden for slangen
     private final int DELAY = 100;
+    private final int RENDER_DELAY = 16;
 
     // Menu Button
     private JButton MenuButton = new JButton("Menu(ESC)");
@@ -30,13 +32,14 @@ public class GameView extends JFrame implements ActionListener {
 
         GameModel model = new GameModel(n, m);
         panel = new SnakePanel(model);
+        panel.setLayout(null);
 
         // Get HUD height and CellSize
         int HUDheight = panel.getHUDheight();
         int CellSize = panel.getCellSize();
 
         // Add Menu Button
-        this.add(MenuButton);
+        panel.add(MenuButton);
         // Set location and size of button
         int menuWidth = MenuButton.getPreferredSize().width + 10;
         MenuButton.setBounds(n*(CellSize-1)-menuWidth-4, 2, menuWidth, HUDheight-4);
@@ -65,6 +68,8 @@ public class GameView extends JFrame implements ActionListener {
         panel.addKeyListener(controller);
 
         timer.start();
+        renderTimer = new Timer(RENDER_DELAY, e -> panel.repaint());
+        renderTimer.start();
 
     }
 
@@ -73,7 +78,7 @@ public class GameView extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {        
         // Move snake
         controller.move(); 
-        this.repaint();
+        panel.repaint();
         
         // Hvis spiltilstanden er WON, ændres vinduets titel for at vise at spilleren har vundet
         if (controller.getModel().getState() == GameState.WON) {
@@ -98,7 +103,7 @@ public class GameView extends JFrame implements ActionListener {
 
         // Then return focus to panel
         panel.requestFocusInWindow();
-        this.repaint();
+        panel.repaint();
     }
 
     // For at lukke gameview fra andre klasser
@@ -109,7 +114,7 @@ public class GameView extends JFrame implements ActionListener {
     // Genstart spillet uden at lave et nyt vindue
     public void restartGame() {
         controller.resetGame();
-        this.repaint();
+        panel.repaint();
         panel.requestFocusInWindow();
     }
 
@@ -122,7 +127,7 @@ public class GameView extends JFrame implements ActionListener {
         if (popupMenu == null) {
             controller.pause();
             popupMenu = new PopupMenu(this, mainApp);
-            this.repaint();
+            panel.repaint();
         } else {
             ClosePopupMenu();
         }
