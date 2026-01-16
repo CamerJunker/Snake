@@ -7,6 +7,8 @@ import java.awt.event.KeyEvent;
 public class GameController extends KeyAdapter {
     private GameModel model;
     private Timer timer;
+    private final int baseDelayMs;
+    private GameView view;
 
     // det seneste input, som så bliver brugt ved næste tick
     private Direction requestedDirection;
@@ -18,15 +20,22 @@ public class GameController extends KeyAdapter {
  
 
     // det her binder model og timer sammen
-    public GameController(GameModel model, SnakePanel panel, Timer timer) {
+    public GameController(GameModel model, SnakePanel panel, Timer timer, GameView view) {
         this.model = model;
         this.timer = timer;
+        this.baseDelayMs = timer.getDelay();
         this.requestedDirection = null;
+        this.view = view;
     }
 
     // reagerer på piletaster og gemmer den gyldige retning
     @Override
     public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            view.toggleMenu();
+            return;
+        }
+
         if (model.isGameOver()) return;
 
         Direction next = switch (e.getKeyCode()) {
@@ -74,5 +83,14 @@ public class GameController extends KeyAdapter {
 
     // Unpause Game
     public void unPause() {timer.start();}
+
+    // Restart game and reset speed
+    public void resetGame() {
+        model.reset();
+        requestedDirection = null;
+        lastScore = 0;
+        timer.setDelay(baseDelayMs);
+        timer.start();
+    }
 
 }

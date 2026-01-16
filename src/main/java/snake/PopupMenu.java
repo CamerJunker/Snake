@@ -12,6 +12,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
 
 public class PopupMenu extends JFrame implements ActionListener{
     JLabel ChangeGameSizelabel = new JLabel("Change Game Size");
@@ -26,6 +29,7 @@ public class PopupMenu extends JFrame implements ActionListener{
     JButton ExitButton = new JButton("Exit");
 
     JButton ChangeGridSize = new JButton("Change Grid Size");
+    JButton RestartButton = new JButton("Restart");
 
     JPanel entryPanel = new JPanel();
 
@@ -43,6 +47,7 @@ public class PopupMenu extends JFrame implements ActionListener{
         // Create window
         gview = gameview;
         this.setSize(windowDimension,windowDimension);
+        this.setLocationRelativeTo(gview);
         this.setVisible(true);
         this.setResizable(false);
 
@@ -51,6 +56,7 @@ public class PopupMenu extends JFrame implements ActionListener{
         rowEntry.setFont(new Font(null,Font.PLAIN, TextSize));
         colEntry.setFont(new Font(null,Font.PLAIN, TextSize));
         ChangeGridSize.setFont(new Font(null,Font.PLAIN, TextSize));
+        RestartButton.setFont(new Font(null,Font.PLAIN, TextSize));
         rowLabel.setFont(new Font(null,Font.PLAIN, TextSize));
         colLabel.setFont(new Font(null,Font.PLAIN, TextSize));
 
@@ -64,6 +70,7 @@ public class PopupMenu extends JFrame implements ActionListener{
         // Add actionlisteners to buttons
         ChangeGridSize.addActionListener(this);
         ExitButton.addActionListener(this);
+        RestartButton.addActionListener(this);
 
         // Add objects to window
         this.add(ChangeGameSizelabel);        
@@ -73,10 +80,21 @@ public class PopupMenu extends JFrame implements ActionListener{
         entryPanel.add(rowEntry);
         entryPanel.add(colEntry);
         this.add(ChangeGridSize);
+        this.add(RestartButton);
         this.add(ExitButton);
 
         // Do nothing on close
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        // ESC lukker menuen igen
+        this.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+            .put(KeyStroke.getKeyStroke("ESCAPE"), "closeMenu");
+        this.getRootPane().getActionMap().put("closeMenu", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gview.ClosePopupMenu();
+            }
+        });
     }
 
     @Override
@@ -102,6 +120,8 @@ public class PopupMenu extends JFrame implements ActionListener{
 
         } else if (e.getSource() == ExitButton) {
             gview.ClosePopupMenu();
+        } else if (e.getSource() == RestartButton) {
+            gview.restartGame();
         }
     }
 
