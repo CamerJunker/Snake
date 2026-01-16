@@ -9,6 +9,7 @@ public class GameController extends KeyAdapter {
     private Timer timer;
     private int baseDelayMs;
     private GameView view;
+    private final SoundManager soundManager = new SoundManager();
 
     // det seneste input, som så bliver brugt ved næste tick
     private Direction requestedDirection;
@@ -26,6 +27,8 @@ public class GameController extends KeyAdapter {
         this.baseDelayMs = timer.getDelay();
         this.requestedDirection = null;
         this.view = view;
+        soundManager.load("eat", "/sounds/eat.wav");
+        soundManager.load("gameover", "/sounds/gameover.wav");
     }
 
     // reagerer på piletaster og gemmer den gyldige retning
@@ -61,6 +64,7 @@ public class GameController extends KeyAdapter {
             return;
         }
 
+        boolean wasGameOver = model.isGameOver();
         model.step(requestedDirection);
         requestedDirection = null;
 
@@ -68,9 +72,14 @@ public class GameController extends KeyAdapter {
         int scoreNow = model.getScore();
         if (scoreNow > lastScore) {
             lastScore = scoreNow;
+            soundManager.play("eat");
 
             int newDelay = Math.max(MIN_DELAY_MS, timer.getDelay() - speedupMs);
             timer.setDelay(newDelay);  
+        }
+
+        if (!wasGameOver && model.isGameOver()) {
+            soundManager.play("gameover");
         }
 
         if (model.isGameOver()) {
