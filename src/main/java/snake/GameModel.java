@@ -21,6 +21,7 @@ public final class GameModel {
     private Cell food;
     private int score = 0;
     private GameState state = GameState.PLAYING;
+    private long startTimeMs;
 
     // random generator til at placere maden tilfældigt
     private final Random rng = new Random();
@@ -73,6 +74,7 @@ public final class GameModel {
 
         // Reset game over
         this.state = GameState.PLAYING;
+        this.startTimeMs = System.currentTimeMillis();
 
         // Issue 3: Sæt maden tilfældigt udenfor slangen
         this.setFood();
@@ -173,4 +175,7 @@ public final class GameModel {
     public Direction getDirection() { return dir; }
     public int getCols() { return cols; }
     public int getRows() { return rows; }
+    public long getElapsedSeconds() {
+        return (System.currentTimeMillis() - startTimeMs) / 1000;
+    }
 }

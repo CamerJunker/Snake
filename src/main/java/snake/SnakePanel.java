@@ -58,7 +58,7 @@ public class SnakePanel extends JPanel {
         // HUD-teksten
         g2d.setColor(Color.WHITE);
         g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 12f));
-        String hudText = "Score: " + model.getScore() + "   State: " + model.getState();
+        String hudText = "Score: " + model.getScore() + "   Tid: " + model.getElapsedSeconds() + "s   State: " + model.getState();
         int hudTextY = (HUD_HEIGHT + g2d.getFontMetrics().getAscent()) / 2;
         g2d.drawString(hudText, HUD_PADDING, hudTextY);
 
