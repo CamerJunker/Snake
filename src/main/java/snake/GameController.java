@@ -116,4 +116,9 @@ public class GameController extends KeyAdapter {
         timer.setDelay(baseDelayMs);
     }
 
+    // Returnerer GameModel, så View kan læse spillets tilstand (f.eks. WON eller GAME_OVER)
+    public GameModel getModel() {
+    return model;
+    }
+
 }

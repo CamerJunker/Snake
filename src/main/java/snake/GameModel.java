@@ -129,6 +129,12 @@ public final class GameModel {
             Cell removed = snake.removeLast();
             occupied.remove(removed);
         }
+
+        // Tjek om spilleren har vundet (slangen fylder hele brættet)
+        if (snake.size() == rows * cols) {
+            state = GameState.WON;
+            return;
+        }
     }
 
     // Wrap-around for række (torus)
