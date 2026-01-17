@@ -1,0 +1,10 @@
+@startuml
++class MainApp ##[bold]black{
+    -- Fields --
+    -{static}GameView gameView
+    -{static}MainApp mainapp 
+    -- Functions --
+    +{static}main()
+    +{static}startGame(int n, int m, GameView gameView, MainApp mainApp)
+}
+@enduml

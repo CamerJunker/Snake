@@ -1,0 +1,44 @@
+@startuml
++class GameModel ##[bold]blue {
+    -- Fields --
+    -int rows
+    -int cols
+    -Deque<Cell> snake
+    -Set<Cell> occupied
+    -Deque<Cell> prevSnake
+    -Direction dir
+    -Cell food
+    -int score
+    -GameState state
+    -long startTimeMs
+    -long lastStepTimeMs
+    -int stepDelayMs
+    -Random rng
+    -- Functions --
+    +GameModel(int n, int m)
+    +reset()
+    +step(Direction requested)
+    -int wrapRow(int r)
+    -int wrapCol(int c)
+    -setFood()
+    +pause()
+    +resume()
+    .. Getters ..
+    +Iterable<Cell> getSnake()
+    +Iterable<Cell> getPrevSnake()
+    +Cell getFood()
+    +int getScore()
+    +GameState getState()
+    +boolean isGameOver()
+    +Direction getDirection()
+    +int getCols()
+    +int getRows()
+    +long getLastStepTimeMs()
+    +int getStepDelayMs()
+    +long getElapsedSeconds()
+    .. Setters ..
+    +setLastStepTimeMs(long lastStepTimeMs)
+    +setStepDelayMs(int stepDelayMs)
+    -snapshotSnake()
+}
+@enduml

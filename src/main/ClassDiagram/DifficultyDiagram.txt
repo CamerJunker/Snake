@@ -1,0 +1,18 @@
+@startuml
++enum Difficulty ##[dotted]black {
+    EASY()
+    NORMAL()
+    HARD()
+    -- Fields --
+    -String label
+    -int baseDelayMs
+    -int speedupMs
+    -- Functions --
+    Difficulty(String label, int baseDelayMs, int speedupMs)
+    .. Getters ..
+    +int getBaseDelayMs()
+    +int getSpeedupMs()
+    .. Override ..
+    +String toString()
+}
+@enduml

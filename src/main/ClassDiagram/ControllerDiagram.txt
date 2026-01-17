@@ -1,0 +1,27 @@
+@startuml
++class GameController < extends KeyAdapter > ##[bold]blue {
+    -- Fields --
+    -GameModel model
+    -Timer timer
+    -int baseDelayMs
+    -GameView view
+    -SoundManager soundManager
+    -Direction requestedDirection
+    -int lastScore
+    -int speedupMs
+    -{static} int MIN_DELAY_MS
+    -- Functions --
+    +GameController(GameModel model, SnakePanel panel, Timer timer, GameView view)
+    .. Implemented Functions ..
+    +keyPressed(KeyEvent e)
+    .. Game Functions ..
+    +move()
+    +pause()
+    +unPause()
+    +resetGame()
+    .. Setter ..
+    +setDifficulty()
+    .. Getter ..
+    +getModel()
+}
+@enduml

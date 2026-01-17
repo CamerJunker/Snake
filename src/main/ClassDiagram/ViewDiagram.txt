@@ -1,0 +1,25 @@
+@startuml
++class GameView < extends JFrame implements ActionListener > ##[bold]blue {
+    -- Fields --
+    -GameController controller
+    -SnakePanel panel
+    -Timer timer
+    -Timer renderTimer
+    -int DELAY
+    -int RENDER_DELAY
+    -JButton MenuButton
+    -PopupMenu popupMenu
+    -MainAp mainApp
+    -- Functions --
+    +GameView(int n, int m, MainApp main)
+    ..Implemented Function..
+    +actionPerformed(ActionEvent e)
+    .. GUI Functions ..
+    +ClosePopupMenu()
+    +CloseGameView()
+    +restartGame()
+    +toggleMenu()
+    .. Setter ..
+    +setDifficulty(Difficulty difficulty)
+}
+@enduml

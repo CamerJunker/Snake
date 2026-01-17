@@ -1,0 +1,9 @@
+@startuml
++enum GameState ##[dotted]black {
+    MENU
+    PLAYING
+    PAUSED
+    GAME_OVER
+    WON
+}
+@enduml
