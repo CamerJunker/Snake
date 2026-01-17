@@ -1,4 +1,19 @@
 @startuml
+MainApp ..|> GameView
 GameView ..|> GameController
+GameView ..|> GameModel
+
+class MainApp {
+    --Fields--
+    -GameView gameView
+    -MainApp mainapp 
+    --Functions--
+    +main()
+    +startGame(int n, int m, GameView gameView, MainApp mainApp)
+}
+
+class GameView {
+    
+}
 
 @enduml
