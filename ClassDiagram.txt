@@ -23,7 +23,7 @@ class GameView < extends JFrame implements ActionListener > {
     -JButton MenuButton
     -PopupMenu popupMenu
     -MainAp mainApp
-    == Functions ==
+    -- Functions --
     +GameView(int n, int m, MainApp main)
     ..Implemented Function..
     +actionPerformed(ActionEvent e)
@@ -37,11 +37,29 @@ class GameView < extends JFrame implements ActionListener > {
 }
 
 class GameController < extends KeyAdapter > {
+    -- Fields --
     -GameModel model
     -Timer timer
     -int baseDelayMs
     -GameView view
     -SoundManager soundManager
+    -Direction requestedDirection
+    -int lastScore
+    -int speedupMs
+    -{static} int MIN_DELAY_MS
+    -- Functions --
+    +GameController(GameModel model, SnakePanel panel, Timer timer, GameView view)
+    .. Implemented Functions ..
+    +keyPressed(KeyEvent e)
+    .. Game Functions ..
+    +move()
+    +pause()
+    +unPause()
+    +resetGame()
+    .. Setter ..
+    +setDifficulty()
+    .. Getter ..
+    +getModel()
 }
 
 @enduml
