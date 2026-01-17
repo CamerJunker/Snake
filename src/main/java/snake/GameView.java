@@ -23,13 +23,9 @@ public class GameView extends JFrame implements ActionListener {
     // Menu Button
     private JButton MenuButton = new JButton("Menu(ESC)");
 
-    private PopupMenu popupMenu = null;
+    private PopupMenu popupMenu;
 
-    private MainApp mainApp;
-
-    public GameView(int n, int m, MainApp main) {
-        mainApp = main;
-
+    public GameView(int n, int m) {
         GameModel model = new GameModel(n, m);
         panel = new SnakePanel(model);
         panel.setLayout(null);
@@ -98,8 +94,8 @@ public class GameView extends JFrame implements ActionListener {
         // Restart GameController
         controller.unPause();
 
-        // Then set variable to null
-        popupMenu = null;
+        // Change state of PopupMenu in MainApp
+        MainApp.PopupStateChange(false);
 
         // Then return focus to panel
         panel.requestFocusInWindow();
@@ -125,10 +121,13 @@ public class GameView extends JFrame implements ActionListener {
     }
 
     public void toggleMenu() {
-        if (popupMenu == null) {
+        // If the popupmenu is not open
+        if (!MainApp.getPopupState()) {
             controller.pause();
-            popupMenu = new PopupMenu(this, mainApp);
+            popupMenu = new PopupMenu(this);
+            MainApp.PopupStateChange(true);
             panel.repaint();
+        // If the popupmenu is open
         } else {
             ClosePopupMenu();
         }

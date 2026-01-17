@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
@@ -21,33 +20,27 @@ public class PopupMenu extends JFrame implements ActionListener{
     JLabel ChangeGameSizelabel = new JLabel("Change Game Size");
     JLabel rowLabel = new JLabel("Row size (5-100)");
     JLabel colLabel = new JLabel("Column size (5-100)");
-    JLabel difficultyLabel = new JLabel("Sværhedsgrad");
 
     JTextField rowEntry = new  JTextField();
     JTextField colEntry = new  JTextField();
-    JComboBox<Difficulty> difficultyBox = new JComboBox<>(Difficulty.values());
 
     GameView gview;
 
     JButton ExitButton = new JButton("Exit");
 
     JButton ChangeGridSize = new JButton("Change Grid Size");
-    JButton ApplyDifficulty = new JButton("Sæt sværhedsgrad");
     JButton RestartButton = new JButton("Restart");
 
     JPanel entryPanel = new JPanel();
-    JPanel difficultyPanel = new JPanel();
 
     private int TextSize = 15;
     private int spacing = 10;
     private int windowDimension = 400;
     private int objectHeight = 30;
 
-    private MainApp mainApp;
-
-    PopupMenu(GameView gameview, MainApp main) {
-
-        mainApp = main;
+    PopupMenu(GameView gameview) {
+        // 
+        MainApp.PopupStateChange(true);
 
         // Create window
         gview = gameview;
@@ -61,13 +54,9 @@ public class PopupMenu extends JFrame implements ActionListener{
         rowEntry.setFont(new Font(null,Font.PLAIN, TextSize));
         colEntry.setFont(new Font(null,Font.PLAIN, TextSize));
         ChangeGridSize.setFont(new Font(null,Font.PLAIN, TextSize));
-        ApplyDifficulty.setFont(new Font(null,Font.PLAIN, TextSize));
         RestartButton.setFont(new Font(null,Font.PLAIN, TextSize));
         rowLabel.setFont(new Font(null,Font.PLAIN, TextSize));
         colLabel.setFont(new Font(null,Font.PLAIN, TextSize));
-        difficultyLabel.setFont(new Font(null,Font.PLAIN, TextSize));
-        difficultyBox.setFont(new Font(null,Font.PLAIN, TextSize));
-        difficultyBox.setSelectedItem(Difficulty.NORMAL);
 
         this.setLayout((new FlowLayout(FlowLayout.CENTER, spacing, spacing)));
 
@@ -76,12 +65,8 @@ public class PopupMenu extends JFrame implements ActionListener{
         entryPanel.setLayout(new GridLayout(2,2,spacing,spacing));
         entryPanel.setPreferredSize(new Dimension(windowDimension-30,(objectHeight + spacing)*2));
 
-        difficultyPanel.setLayout(new GridLayout(1,2,spacing,spacing));
-        difficultyPanel.setPreferredSize(new Dimension(windowDimension-30, objectHeight + spacing));
-
         // Add actionlisteners to buttons
         ChangeGridSize.addActionListener(this);
-        ApplyDifficulty.addActionListener(this);
         ExitButton.addActionListener(this);
         RestartButton.addActionListener(this);
 
@@ -93,10 +78,6 @@ public class PopupMenu extends JFrame implements ActionListener{
         entryPanel.add(rowEntry);
         entryPanel.add(colEntry);
         this.add(ChangeGridSize);
-        this.add(difficultyPanel);
-        difficultyPanel.add(difficultyLabel);
-        difficultyPanel.add(difficultyBox);
-        this.add(ApplyDifficulty);
         this.add(RestartButton);
         this.add(ExitButton);
 
@@ -112,13 +93,6 @@ public class PopupMenu extends JFrame implements ActionListener{
                 gview.ClosePopupMenu();
             }
         });
-    }
-
-    private void applySelectedDifficulty() {
-        Difficulty selected = (Difficulty) difficultyBox.getSelectedItem();
-        if (selected != null) {
-            gview.setDifficulty(selected);
-        }
     }
 
     @Override
@@ -139,15 +113,12 @@ public class PopupMenu extends JFrame implements ActionListener{
             }
 
             if (rowVar <= 100 && rowVar >= 5 && colVar <= 100 && colVar >= 5) {
-                MainApp.startGame(rowVar, colVar, gview, mainApp);
+                MainApp.startGame(rowVar, colVar, gview);
             }
 
-        } else if (e.getSource() == ApplyDifficulty) {
-            applySelectedDifficulty();
         } else if (e.getSource() == ExitButton) {
             gview.ClosePopupMenu();
         } else if (e.getSource() == RestartButton) {
-            applySelectedDifficulty();
             gview.restartGame();
         }
     }
