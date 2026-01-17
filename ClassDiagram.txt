@@ -4,16 +4,44 @@ GameView ..|> GameController
 GameView ..|> GameModel
 
 class MainApp {
-    --Fields--
-    -GameView gameView
-    -MainApp mainapp 
-    --Functions--
-    +main()
-    +startGame(int n, int m, GameView gameView, MainApp mainApp)
+    -- Fields --
+    -{static}GameView gameView
+    -{static}MainApp mainapp 
+    -- Functions --
+    +{static}main()
+    +{static}startGame(int n, int m, GameView gameView, MainApp mainApp)
 }
 
-class GameView {
-    
+class GameView < extends JFrame implements ActionListener > {
+    -- Fields --
+    -GameController controller
+    -SnakePanel panel
+    -Timer timer
+    -Timer renderTimer
+    -int DELAY
+    -int RENDER_DELAY
+    -JButton MenuButton
+    -PopupMenu popupMenu
+    -MainAp mainApp
+    == Functions ==
+    +GameView(int n, int m, MainApp main)
+    ..Implemented Function..
+    +actionPerformed(ActionEvent e)
+    .. GUI Functions ..
+    +ClosePopupMenu()
+    +CloseGameView()
+    +restartGame()
+    +toggleMenu()
+    .. Setter ..
+    +setDifficulty(Difficulty difficulty)
+}
+
+class GameController < extends KeyAdapter > {
+    -GameModel model
+    -Timer timer
+    -int baseDelayMs
+    -GameView view
+    -SoundManager soundManager
 }
 
 @enduml
