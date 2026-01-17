@@ -25,6 +25,7 @@ public final class GameModel {
     private long startTimeMs;
     private long lastStepTimeMs = System.currentTimeMillis();
     private int stepDelayMs = 100;
+    private long elapsedTime;
 
     // random generator til at placere maden tilfældigt
     private final Random rng = new Random();
@@ -80,6 +81,7 @@ public final class GameModel {
         this.state = GameState.PLAYING;
         this.startTimeMs = System.currentTimeMillis();
         this.lastStepTimeMs = this.startTimeMs;
+        this.elapsedTime = 0;
 
         // Issue 3: Sæt maden tilfældigt udenfor slangen
         this.setFood();
@@ -195,18 +197,27 @@ public final class GameModel {
     public long getLastStepTimeMs() { return lastStepTimeMs; }
     public int getStepDelayMs() { return stepDelayMs; }
     public long getElapsedSeconds() {
-        return (System.currentTimeMillis() - startTimeMs) / 1000;
+        if (state == GameState.PLAYING) {
+            return this.elapsedTime + (System.currentTimeMillis() - startTimeMs) / 1000;
+        } else {
+            return this.elapsedTime;
+        }
+        
     }
 
     public void pause() {
         if (state == GameState.PLAYING) {
             state = GameState.PAUSED;
+            // Add time passed
+            this.elapsedTime += (System.currentTimeMillis() - startTimeMs) / 1000;
         }
     }
 
     public void resume() {
         if (state == GameState.PAUSED) {
             state = GameState.PLAYING;
+            // Set start time to now
+            startTimeMs = System.currentTimeMillis();
         }
     }
 

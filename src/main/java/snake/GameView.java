@@ -114,6 +114,7 @@ public class GameView extends JFrame implements ActionListener {
     // Genstart spillet uden at lave et nyt vindue
     public void restartGame() {
         controller.resetGame();
+        controller.pause();
         panel.repaint();
         panel.requestFocusInWindow();
     }
