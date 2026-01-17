@@ -3,6 +3,7 @@ MainApp --> GameView
 GameView --> GameController
 GameView --> GameModel
 GameView --> PopupMenu
+GameView --> SnakePanel
 
 class MainApp {
     -- Fields --
@@ -85,4 +86,24 @@ class PopupMenu < extends JFrame implements ActionListener > ##[dotted]black {
     +actionPerformed(ActionEvent e)
 }
 
+class SnakePanel < extends JPanel > {
+    -- Fields --
+    -GameModel model
+    -{static} Color DARK_GREEN
+    -{static} int CELL_SIZE
+    -{static} int HUD_HEIGHT
+    -{static} int HUD_PADDING
+    -int boardWidth
+    -int boardHeight
+    -- Functions --
+    +SnakePanel(GameModel model)
+    .. Implemented Function ..
+    #paintComponent(Graphics g)
+    .. Getters ..
+    +int getCellSize()
+    +int getHUDheight()
+    -float getStepAlpha()
+    -float interpolateWrapped(int prev, int current, int size, float t)
+    -List<Cell> toList(Iterable<Cell> cells)
+}
 @enduml
