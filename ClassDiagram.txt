@@ -1,0 +1,4 @@
+@startuml
+GameView ..|> GameController
+
+@enduml
