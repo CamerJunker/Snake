@@ -1,7 +1,8 @@
 @startuml
-MainApp ..|> GameView
-GameView ..|> GameController
-GameView ..|> GameModel
+MainApp --> GameView
+GameView --> GameController
+GameView --> GameModel
+GameView --> PopupMenu
 
 class MainApp {
     -- Fields --
@@ -60,6 +61,28 @@ class GameController < extends KeyAdapter > {
     +setDifficulty()
     .. Getter ..
     +getModel()
+}
+
+class PopupMenu < extends JFrame implements ActionListener > ##[dotted]black {
+    -- Fields --
+    JLabel ChangeGameSizelabel
+    JLabel rowLabel
+    JLabel colLabel
+    JTextField rowEntry
+    JTextField colEntry
+    GameView gview
+    JButton ExitButton
+    JButton ChangeGridSize
+    JPanel entryPanel
+    -int TextSize
+    -int spacing
+    -int windowDimension
+    -int objectHeight
+    -MainApp mainApp
+    -- Functions --
+    PopupMenu(GameView gameview, MainApp, main)
+    .. Implemented Function ..
+    +actionPerformed(ActionEvent e)
 }
 
 @enduml
