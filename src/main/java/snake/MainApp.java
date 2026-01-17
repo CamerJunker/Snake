@@ -14,8 +14,11 @@ public class MainApp {
             int n = Integer.parseInt(args[0]);
             int m = Integer.parseInt(args[1]);
 
-            // Opretter og viser spilvinduet
-            new GameView(n, m);
+            // Opretter model, view og controller (MVC wiring)
+            GameModel model = new GameModel(n, m);
+            SnakePanel panel = new SnakePanel(model);
+            GameController controller = new GameController(model, panel);
+            new GameView(panel, controller);
 
         } catch (NumberFormatException e) {
             // Håndterer tilfælde hvor input ikke er heltal

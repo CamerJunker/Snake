@@ -8,12 +8,9 @@ public class GameController extends KeyAdapter {
     private final GameModel model;
     private final SnakePanel panel;
 
-    private Direction currentDirection;
-
     public GameController(GameModel model, SnakePanel panel) {
         this.model = model;
         this.panel = panel;
-        this.currentDirection = model.getDirection();
     }
 
     @Override
@@ -28,10 +25,10 @@ public class GameController extends KeyAdapter {
         };
 
         if (next == null) return;
+        Direction currentDirection = model.getDirection();
         if (isOpposite(next, currentDirection)) return;
 
-        currentDirection = next;
-        model.step(currentDirection);
+        model.step(next);
         panel.repaint();
     }
 
