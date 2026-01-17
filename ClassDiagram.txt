@@ -5,7 +5,7 @@ GameView --> GameModel
 GameView --> PopupMenu
 GameView --> SnakePanel
 
-class MainApp {
++class MainApp ##[bold]black{
     -- Fields --
     -{static}GameView gameView
     -{static}MainApp mainapp 
@@ -14,7 +14,7 @@ class MainApp {
     +{static}startGame(int n, int m, GameView gameView, MainApp mainApp)
 }
 
-class GameView < extends JFrame implements ActionListener > {
++class GameView < extends JFrame implements ActionListener > ##[bold]blue {
     -- Fields --
     -GameController controller
     -SnakePanel panel
@@ -38,7 +38,7 @@ class GameView < extends JFrame implements ActionListener > {
     +setDifficulty(Difficulty difficulty)
 }
 
-class GameController < extends KeyAdapter > {
++class GameController < extends KeyAdapter > ##[bold]blue {
     -- Fields --
     -GameModel model
     -Timer timer
@@ -64,7 +64,7 @@ class GameController < extends KeyAdapter > {
     +getModel()
 }
 
-class PopupMenu < extends JFrame implements ActionListener > ##[dotted]black {
++class PopupMenu < extends JFrame implements ActionListener > ##[dotted]black {
     -- Fields --
     JLabel ChangeGameSizelabel
     JLabel rowLabel
@@ -86,7 +86,7 @@ class PopupMenu < extends JFrame implements ActionListener > ##[dotted]black {
     +actionPerformed(ActionEvent e)
 }
 
-class SnakePanel < extends JPanel > {
++class SnakePanel < extends JPanel > ##[dotted]black {
     -- Fields --
     -GameModel model
     -{static} Color DARK_GREEN
@@ -105,5 +105,48 @@ class SnakePanel < extends JPanel > {
     -float getStepAlpha()
     -float interpolateWrapped(int prev, int current, int size, float t)
     -List<Cell> toList(Iterable<Cell> cells)
+}
+
++class GameModel ##[bold]blue {
+    -- Fields --
+    -int rows
+    -int cols
+    -Deque<Cell> snake
+    -Set<Cell> occupied
+    -Deque<Cell> prevSnake
+    -Direction dir
+    -Cell food
+    -int score
+    -GameState state
+    -long startTimeMs
+    -long lastStepTimeMs
+    -int stepDelayMs
+    -Random rng
+    -- Functions --
+    +GameModel(int n, int m)
+    +reset()
+    +step(Direction requested)
+    -int wrapRow(int r)
+    -int wrapCol(int c)
+    -setFood()
+    +pause()
+    +resume()
+    .. Getters ..
+    +Iterable<Cell> getSnake()
+    +Iterable<Cell> getPrevSnake()
+    +Cell getFood()
+    +int getScore()
+    +GameState getState()
+    +boolean isGameOver()
+    +Direction getDirection()
+    +int getCols()
+    +int getRows()
+    +long getLastStepTimeMs()
+    +int getStepDelayMs()
+    +long getElapsedSeconds()
+    .. Setters ..
+    +setLastStepTimeMs(long lastStepTimeMs)
+    +setStepDelayMs(int stepDelayMs)
+    -snapshotSnake()
 }
 @enduml
