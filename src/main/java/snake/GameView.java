@@ -63,6 +63,11 @@ public class GameView extends JFrame implements ActionListener {
         controller = new GameController(model, panel, timer, this);
         panel.addKeyListener(controller);
 
+        // If popup menu is open, then pause game. In the case of resizing the game in the menu.
+        if (MainApp.getPopupState()){
+            controller.pause();
+        }
+
         timer.start();
         renderTimer = new Timer(RENDER_DELAY, e -> panel.repaint());
         renderTimer.start();
