@@ -180,9 +180,11 @@ public final class GameModel {
     public Iterable<Cell> getSnake() { 
         return Collections.unmodifiableCollection(snake); 
     }
+
     public Iterable<Cell> getPrevSnake() {
         return Collections.unmodifiableCollection(prevSnake);
     }
+    
     public Cell getFood() { return food; }
     public int getScore() { return score; }
     public GameState getState() { return state; }

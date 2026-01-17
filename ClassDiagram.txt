@@ -4,6 +4,11 @@ GameView --> GameController
 GameView --> GameModel
 GameView --> PopupMenu
 GameView --> SnakePanel
+GameModel --> GameState
+GameModel --> Cell
+GameController --> Difficulty
+GameModel --> Direction
+GameController --> SoundManager
 
 +class MainApp ##[bold]black{
     -- Fields --
@@ -149,4 +154,56 @@ GameView --> SnakePanel
     +setStepDelayMs(int stepDelayMs)
     -snapshotSnake()
 }
+
++enum GameState ##[dotted]black {
+    MENU
+    PLAYING
+    PAUSED
+    GAME_OVER
+    WON
+}
+
++class Cell < record > ##[dotted]black {
+    Cell(int r, int c)
+}
+
++class SoundManager ##[dotted]black {
+    -- Field --
+    -Map<String, Clip> clips
+    -- Functions --
+    +load(String key, String resourcePath)
+    +play(String key)
+}
+
++enum Difficulty ##[dotted]black {
+    EASY()
+    NORMAL()
+    HARD()
+    -- Fields --
+    -String label
+    -int baseDelayMs
+    -int speedupMs
+    -- Functions --
+    Difficulty(String label, int baseDelayMs, int speedupMs)
+    .. Getters ..
+    +int getBaseDelayMs()
+    +int getSpeedupMs()
+    .. Override ..
+    +String toString()
+}
+
++enum Direction ##[dotted]black {
+    UP()
+    DOWN()
+    LEFT()
+    RIGHT()
+    -- Fields --
+    +int dr
+    +int dc
+    -- Functions --
+    Direction(int dr, int dc)
+    +Direction opposite()
+}
+
+
 @enduml
