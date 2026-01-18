@@ -1,14 +1,14 @@
 @startuml
-MainApp --> GameView
-GameView --> GameController
-GameView --> GameModel
-GameView --> PopupMenu
-GameView --> SnakePanel
-GameModel --> GameState
-GameModel --> Cell
-GameController --> Difficulty
-GameModel --> Direction
-GameController --> SoundManager
+MainApp ..|> GameView
+GameView ..|> GameController
+GameView ..|> GameModel
+GameView ..|> PopupMenu
+GameView ..|> SnakePanel
+GameModel ..|> GameState
+GameModel ..|> Cell
+GameController ..|> Difficulty
+GameModel ..|> Direction
+GameController ..|> SoundManager
 
 +class MainApp ##[bold]black{
     -- Fields --
@@ -211,8 +211,8 @@ GameController --> SoundManager
     LEFT()
     RIGHT()
     -- Fields --
-    +int dr
-    +int dc
+    +final int dr
+    +final int dc
     -- Functions --
     Direction(int dr, int dc)
     +Direction opposite()

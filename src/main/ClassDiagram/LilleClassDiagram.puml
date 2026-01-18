@@ -1,0 +1,46 @@
+@startuml
+MainApp ..|> GameView
+GameView ..|> GameController
+GameView ..|> GameModel
+GameView ..|> PopupMenu
+GameView ..|> SnakePanel
+GameModel ..|> GameState
+GameModel ..|> Cell
+GameController ..|> Difficulty
+GameModel ..|> Direction
+GameController ..|> SoundManager
+
++class MainApp ##[bold]black{
+}
+
++class GameView < extends JFrame implements ActionListener > ##[bold]blue {
+}
+
++class GameController < extends KeyAdapter > ##[bold]blue {
+}
+
++class PopupMenu < extends JFrame implements ActionListener > ##[dotted]black {
+}
+
++class SnakePanel < extends JPanel > ##[dotted]black {
+}
+
++class GameModel ##[bold]blue {
+}
+
++enum GameState ##[dotted]black {
+}
+
++class Cell < record > ##[dotted]black {
+}
+
++class SoundManager ##[dotted]black {
+}
+
++enum Difficulty ##[dotted]black {
+}
+
++enum Direction ##[dotted]black {
+}
+
+@enduml

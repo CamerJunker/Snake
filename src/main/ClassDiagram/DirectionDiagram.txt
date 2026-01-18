@@ -5,8 +5,8 @@
     LEFT()
     RIGHT()
     -- Fields --
-    +int dr
-    +int dc
+    +final int dr
+    +final int dc
     -- Functions --
     Direction(int dr, int dc)
     +Direction opposite()
