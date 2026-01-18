@@ -1,4 +1,6 @@
 @startuml
+GameController ..|> SoundManager
+
 +class GameController < extends KeyAdapter > ##[bold]blue {
     -- Fields --
     -GameModel model
@@ -23,5 +25,13 @@
     +setDifficulty(Difficulty difficulty)
     .. Getter ..
     +getModel()
+}
+
++class SoundManager ##[dotted]black {
+    -- Field --
+    -final Map<String, Clip> clips
+    -- Functions --
+    +load(String key, String resourcePath)
+    +play(String key)
 }
 @enduml
