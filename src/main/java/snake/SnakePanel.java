@@ -88,10 +88,10 @@ public class SnakePanel extends JPanel {
         g2d.setColor(Color.BLACK);
         for (Cell wall : model.getWalls()) {
             g2d.fillRect(
-                wall.c() * CELL_SIZE,
-                wall.r() * CELL_SIZE + HUD_HEIGHT,
-                CELL_SIZE,
-                CELL_SIZE
+                wall.c() * CellSize,
+                wall.r() * CellSize + HUD_HEIGHT,
+                CellSize,
+                CellSize
             );
         }
 
@@ -99,10 +99,10 @@ public class SnakePanel extends JPanel {
         g2d.setColor(Color.MAGENTA);
         for (Cell wh : model.getWormholes().keySet()) {
             g2d.fillRect(
-                wh.c() * CELL_SIZE,
-                wh.r() * CELL_SIZE + HUD_HEIGHT,
-                CELL_SIZE,
-                CELL_SIZE
+                wh.c() * CellSize,
+                wh.r() * CellSize + HUD_HEIGHT,
+                CellSize,
+                CellSize
             );
         }
 
