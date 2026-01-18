@@ -138,7 +138,7 @@ public class PopupMenu extends JFrame implements ActionListener{
             }
 
             if (rowVar <= 100 && rowVar >= 5 && colVar <= 100 && colVar >= 5) {
-                MainApp.startGame(rowVar, colVar, gview);
+                MainApp.startGame(rowVar, colVar);
             }
 
         } else if (e.getSource() == ApplyDifficulty) {

@@ -94,9 +94,17 @@ public class GameView extends JFrame implements ActionListener {
 
     // For at sætte variablen til null i PopupMenu klassen
     public void ClosePopupMenu(){
-        // First dispose of window
-        popupMenu.dispose();
+        // If the popupMenu variable is not null
+        if (popupMenu != null) {
+            popupMenu.dispose();
 
+        // If the popupMenu variable is null
+        // If a new game window was made, the reference is in MainApp
+        } else {
+            popupMenu = MainApp.getRefPopupMenu();
+            popupMenu.dispose();
+        }
+        
         // Restart GameController
         controller.unPause();
 
@@ -126,12 +134,24 @@ public class GameView extends JFrame implements ActionListener {
         controller.setDifficulty(difficulty);
     }
 
+    // Åbn popup menu, hvis åben, luk popup menu
     public void toggleMenu() {
         // If the popupmenu is not open
         if (!MainApp.getPopupState()) {
+
+            // Pause game
             controller.pause();
+
+            // Create new popupmenu
             popupMenu = new PopupMenu(this);
+
+            // Pass reference to popup menu to MainApp
+            MainApp.passOnPopupMenu(popupMenu);
+
+            // Set flag in MainApp to true
             MainApp.PopupStateChange(true);
+
+            // Repaint panel
             panel.repaint();
         // If the popupmenu is open
         } else {
