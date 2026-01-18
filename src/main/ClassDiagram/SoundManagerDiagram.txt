@@ -1,7 +1,7 @@
 @startuml
 +class SoundManager ##[dotted]black {
     -- Field --
-    -Map<String, Clip> clips
+    -final Map<String, Clip> clips
     -- Functions --
     +load(String key, String resourcePath)
     +play(String key)

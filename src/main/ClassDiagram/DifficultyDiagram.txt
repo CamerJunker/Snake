@@ -4,15 +4,15 @@
     NORMAL()
     HARD()
     -- Fields --
-    -String label
-    -int baseDelayMs
-    -int speedupMs
+    -final String label
+    -final int baseDelayMs
+    -final int speedupMs
     -- Functions --
     Difficulty(String label, int baseDelayMs, int speedupMs)
     .. Getters ..
     +int getBaseDelayMs()
     +int getSpeedupMs()
-    .. Override ..
+    .. Override Function ..
     +String toString()
 }
 @enduml

@@ -24,6 +24,7 @@
     -setFood()
     +pause()
     +resume()
+    -snapshotSnake()
     .. Getters ..
     +Iterable<Cell> getSnake()
     +Iterable<Cell> getPrevSnake()
@@ -40,6 +41,5 @@
     .. Setters ..
     +setLastStepTimeMs(long lastStepTimeMs)
     +setStepDelayMs(int stepDelayMs)
-    -snapshotSnake()
 }
 @enduml

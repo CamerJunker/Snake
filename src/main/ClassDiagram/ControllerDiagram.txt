@@ -5,11 +5,11 @@
     -Timer timer
     -int baseDelayMs
     -GameView view
-    -SoundManager soundManager
+    -final SoundManager soundManager
     -Direction requestedDirection
     -int lastScore
     -int speedupMs
-    -{static} int MIN_DELAY_MS
+    -{static}final int MIN_DELAY_MS
     -- Functions --
     +GameController(GameModel model, SnakePanel panel, Timer timer, GameView view)
     .. Implemented Functions ..
@@ -20,7 +20,7 @@
     +unPause()
     +resetGame()
     .. Setter ..
-    +setDifficulty()
+    +setDifficulty(Difficulty difficulty)
     .. Getter ..
     +getModel()
 }

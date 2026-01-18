@@ -5,12 +5,12 @@
     -SnakePanel panel
     -Timer timer
     -Timer renderTimer
-    -int DELAY
-    -int RENDER_DELAY
+    -final int DELAY
+    -final int RENDER_DELAY
     -JButton MenuButton
     -PopupMenu popupMenu
     -- Functions --
-    +GameView(int n, int m, MainApp main)
+    +GameView(int n, int m)
     ..Implemented Function..
     +actionPerformed(ActionEvent e)
     .. GUI Functions ..

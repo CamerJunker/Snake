@@ -13,10 +13,11 @@ GameController --> SoundManager
 +class MainApp ##[bold]black{
     -- Fields --
     -{static}GameView gameView
-    -{static}MainApp mainapp 
+    -{static}boolean PopupOpen
+    -{static}PopupMenu popupMenuHolder
     -- Functions --
     +{static}main()
-    +{static}startGame(int n, int m, GameView gameView, MainApp mainApp)
+    +{static}startGame(int n, int m)
     .. Setters ..
     +{static}PopupStateChange(boolean value)
     +{static}passOnPopupMenu(PopupMenu popupmenu)
@@ -31,12 +32,12 @@ GameController --> SoundManager
     -SnakePanel panel
     -Timer timer
     -Timer renderTimer
-    -int DELAY
-    -int RENDER_DELAY
+    -final int DELAY
+    -final int RENDER_DELAY
     -JButton MenuButton
     -PopupMenu popupMenu
     -- Functions --
-    +GameView(int n, int m, MainApp main)
+    +GameView(int n, int m)
     ..Implemented Function..
     +actionPerformed(ActionEvent e)
     .. GUI Functions ..
@@ -54,11 +55,11 @@ GameController --> SoundManager
     -Timer timer
     -int baseDelayMs
     -GameView view
-    -SoundManager soundManager
+    -final SoundManager soundManager
     -Direction requestedDirection
     -int lastScore
     -int speedupMs
-    -{static} int MIN_DELAY_MS
+    -{static}final int MIN_DELAY_MS
     -- Functions --
     +GameController(GameModel model, SnakePanel panel, Timer timer, GameView view)
     .. Implemented Functions ..
@@ -69,7 +70,7 @@ GameController --> SoundManager
     +unPause()
     +resetGame()
     .. Setter ..
-    +setDifficulty()
+    +setDifficulty(Difficulty difficulty)
     .. Getter ..
     +getModel()
 }
@@ -95,7 +96,7 @@ GameController --> SoundManager
     -int windowDimension
     -int objectHeight
     -- Functions --
-    PopupMenu(GameView gameview, MainApp, main)
+    PopupMenu(GameView gameview)
     -applySelectedDifficulty()
     .. Implemented Function ..
     +actionPerformed(ActionEvent e)
@@ -148,6 +149,7 @@ GameController --> SoundManager
     -setFood()
     +pause()
     +resume()
+    -snapshotSnake()
     .. Getters ..
     +Iterable<Cell> getSnake()
     +Iterable<Cell> getPrevSnake()
@@ -164,7 +166,6 @@ GameController --> SoundManager
     .. Setters ..
     +setLastStepTimeMs(long lastStepTimeMs)
     +setStepDelayMs(int stepDelayMs)
-    -snapshotSnake()
 }
 
 +enum GameState ##[dotted]black {
@@ -181,7 +182,7 @@ GameController --> SoundManager
 
 +class SoundManager ##[dotted]black {
     -- Field --
-    -Map<String, Clip> clips
+    -final Map<String, Clip> clips
     -- Functions --
     +load(String key, String resourcePath)
     +play(String key)
@@ -192,15 +193,15 @@ GameController --> SoundManager
     NORMAL()
     HARD()
     -- Fields --
-    -String label
-    -int baseDelayMs
-    -int speedupMs
+    -final String label
+    -final int baseDelayMs
+    -final int speedupMs
     -- Functions --
     Difficulty(String label, int baseDelayMs, int speedupMs)
     .. Getters ..
     +int getBaseDelayMs()
     +int getSpeedupMs()
-    .. Override ..
+    .. Override Function ..
     +String toString()
 }
 

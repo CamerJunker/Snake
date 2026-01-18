@@ -2,10 +2,11 @@
 +class MainApp ##[bold]black{
     -- Fields --
     -{static}GameView gameView
-    -{static}MainApp mainapp 
+    -{static}boolean PopupOpen
+    -{static}PopupMenu popupMenuHolder
     -- Functions --
     +{static}main()
-    +{static}startGame(int n, int m, GameView gameView, MainApp mainApp)
+    +{static}startGame(int n, int m)
     .. Setters ..
     +{static}PopupStateChange(boolean value)
     +{static}passOnPopupMenu(PopupMenu popupmenu)
