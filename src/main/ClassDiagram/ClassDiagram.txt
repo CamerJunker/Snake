@@ -103,11 +103,12 @@ GameController --> SoundManager
 
 +class SnakePanel < extends JPanel > ##[dotted]black {
     -- Fields --
-    -GameModel model
-    -{static} Color DARK_GREEN
-    -{static} int CELL_SIZE
-    -{static} int HUD_HEIGHT
-    -{static} int HUD_PADDING
+    -final GameModel model
+    +{static}final Color DARK_GREEN
+    -int CellSize
+    -{static}final int HUD_HEIGHT
+    -{static}final int HUD_PADDING
+    -{static}final int MIN_BOARD_SIZE
     -int boardWidth
     -int boardHeight
     -- Functions --
@@ -124,11 +125,11 @@ GameController --> SoundManager
 
 +class GameModel ##[bold]blue {
     -- Fields --
-    -int rows
-    -int cols
-    -Deque<Cell> snake
-    -Set<Cell> occupied
-    -Deque<Cell> prevSnake
+    -final int rows
+    -final int cols
+    -final Deque<Cell> snake
+    -final Set<Cell> occupied
+    -final Deque<Cell> prevSnake
     -Direction dir
     -Cell food
     -int score
@@ -136,7 +137,8 @@ GameController --> SoundManager
     -long startTimeMs
     -long lastStepTimeMs
     -int stepDelayMs
-    -Random rng
+    -long elapsedTime
+    -final Random rng
     -- Functions --
     +GameModel(int n, int m)
     +reset()

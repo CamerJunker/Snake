@@ -1,11 +1,11 @@
 @startuml
 +class GameModel ##[bold]blue {
     -- Fields --
-    -int rows
-    -int cols
-    -Deque<Cell> snake
-    -Set<Cell> occupied
-    -Deque<Cell> prevSnake
+    -final int rows
+    -final int cols
+    -final Deque<Cell> snake
+    -final Set<Cell> occupied
+    -final Deque<Cell> prevSnake
     -Direction dir
     -Cell food
     -int score
@@ -13,7 +13,8 @@
     -long startTimeMs
     -long lastStepTimeMs
     -int stepDelayMs
-    -Random rng
+    -long elapsedTime
+    -final Random rng
     -- Functions --
     +GameModel(int n, int m)
     +reset()
