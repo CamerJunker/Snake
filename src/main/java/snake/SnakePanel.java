@@ -18,24 +18,32 @@ public class SnakePanel extends JPanel {
     public static final Color DARK_GREEN = new Color(40, 40, 40);
 
     //Celle Størrelsen
-    private static final int CELL_SIZE = 13;
+    private int CellSize;
     private static final int HUD_HEIGHT = 24;
     private static final int HUD_PADDING = 6;
+    private static final int MIN_BOARD_SIZE = 400;
 
     private int boardWidth;
     private int boardHeight;
 
     public SnakePanel(GameModel model) {
-        boardWidth = model.getCols() * CELL_SIZE;
-        boardHeight = model.getRows() * CELL_SIZE;
-
         this.model = model;
+
+        int baseCellSize = 13;
+        int minCellSizeForWidth = MIN_BOARD_SIZE / model.getCols();
+        int minCellSizeForHeight = MIN_BOARD_SIZE / model.getRows();
+        CellSize = Math.max(baseCellSize, Math.max(minCellSizeForWidth, minCellSizeForHeight));
+
+        boardWidth = model.getCols() * CellSize;
+        boardHeight = model.getRows() * CellSize;
 
         this.setPreferredSize(new Dimension(boardWidth, boardHeight + HUD_HEIGHT));
         this.setBackground(DARK_GREEN);
-
-        // View må ikke håndtere input, men panelet skal gerne kunne få fokus
         this.setFocusable(true);
+    }
+
+    public int getCellSize() {
+        return CellSize;
     }
 
     @Override
@@ -69,10 +77,10 @@ public class SnakePanel extends JPanel {
         if (food != null) {
             g2d.setColor(Color.ORANGE);
             g2d.fillRect(
-                food.c() * CELL_SIZE,
-                food.r() * CELL_SIZE + HUD_HEIGHT,
-                CELL_SIZE,
-                CELL_SIZE
+                food.c() * CellSize,
+                food.r() * CellSize + HUD_HEIGHT,
+                CellSize,
+                CellSize
             );
         }
 
@@ -94,10 +102,10 @@ public class SnakePanel extends JPanel {
 
             float drawRow = interpolateWrapped(previous.r(), current.r(), model.getRows(), alpha);
             float drawCol = interpolateWrapped(previous.c(), current.c(), model.getCols(), alpha);
-            int x = Math.round(drawCol * CELL_SIZE);
-            int y = Math.round(drawRow * CELL_SIZE) + HUD_HEIGHT;
+            int x = Math.round(drawCol * CellSize);
+            int y = Math.round(drawRow * CellSize) + HUD_HEIGHT;
 
-            g2d.fillRect(x, y, CELL_SIZE, CELL_SIZE);
+            g2d.fillRect(x, y, CellSize, CellSize);
         }
 
         if (model.isGameOver()) {
@@ -130,7 +138,6 @@ public class SnakePanel extends JPanel {
     }
 
     // Getters for visse variabler
-    public int getCellSize() {return CELL_SIZE;}
     public int getHUDheight() {return HUD_HEIGHT;}
 
     private float getStepAlpha() {

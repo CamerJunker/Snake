@@ -38,7 +38,8 @@ public class GameView extends JFrame implements ActionListener {
         panel.add(MenuButton);
         // Set location and size of button
         int menuWidth = MenuButton.getPreferredSize().width + 10;
-        MenuButton.setBounds(n*(CellSize-1)-menuWidth-4, 2, menuWidth, HUDheight-4);
+        int boardWidth = n * CellSize;
+        MenuButton.setBounds(boardWidth - menuWidth - 4, 2, menuWidth, HUDheight - 4);
         MenuButton.setToolTipText("åbn menuen");
         
         MenuButton.addActionListener(this);
