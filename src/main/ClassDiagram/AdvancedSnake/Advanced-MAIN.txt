@@ -1,0 +1,17 @@
+@startuml
++class MainApp ##[bold]black{
+    -- Fields --
+    -{static}GameView gameView
+    -{static}boolean PopupOpen
+    -{static}PopupMenu popupMenuHolder
+    -- Functions --
+    +{static}main()
+    +{static}startGame(int n, int m)
+    .. Setters ..
+    +{static}PopupStateChange(boolean value)
+    +{static}passOnPopupMenu(PopupMenu popupmenu)
+    .. Getters ..
+    +{static}boolean getPopupState()
+    +{static}PopupMenu getRefPopupMenu()
+}
+@enduml

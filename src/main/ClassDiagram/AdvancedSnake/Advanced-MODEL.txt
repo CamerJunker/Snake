@@ -1,0 +1,93 @@
+@startuml
+GameModel ..|> GameState
+GameModel ..|> Cell
+GameModel ..|> Difficulty
+GameModel ..|> Direction
+
++enum Difficulty ##[dotted]black {
+    EASY()
+    NORMAL()
+    HARD()
+    -- Fields --
+    -final String label
+    -final int baseDelayMs
+    -final int speedupMs
+    -- Functions --
+    Difficulty(String label, int baseDelayMs, int speedupMs)
+    .. Getters ..
+    +int getBaseDelayMs()
+    +int getSpeedupMs()
+    .. Override Function ..
+    +String toString()
+}
+
++enum Direction ##[dotted]black {
+    UP()
+    DOWN()
+    LEFT()
+    RIGHT()
+    -- Fields --
+    +final int dr
+    +final int dc
+    -- Functions --
+    Direction(int dr, int dc)
+    +Direction opposite()
+}
+
++class GameModel ##[bold]blue {
+    -- Fields --
+    -final int rows
+    -final int cols
+    -final Deque<Cell> snake
+    -final Set<Cell> occupied
+    -final Deque<Cell> prevSnake
+    -Direction dir
+    -Cell food
+    -int score
+    -GameState state
+    -long startTimeMs
+    -long lastStepTimeMs
+    -int stepDelayMs
+    -long elapsedTime
+    -final Random rng
+    -- Functions --
+    +GameModel(int n, int m)
+    +reset()
+    +step(Direction requested)
+    -int wrapRow(int r)
+    -int wrapCol(int c)
+    -setFood()
+    +pause()
+    +resume()
+    -snapshotSnake()
+    .. Getters ..
+    +Iterable<Cell> getSnake()
+    +Iterable<Cell> getPrevSnake()
+    +Cell getFood()
+    +int getScore()
+    +GameState getState()
+    +boolean isGameOver()
+    +Direction getDirection()
+    +int getCols()
+    +int getRows()
+    +long getLastStepTimeMs()
+    +int getStepDelayMs()
+    +long getElapsedSeconds()
+    .. Setters ..
+    +setLastStepTimeMs(long lastStepTimeMs)
+    +setStepDelayMs(int stepDelayMs)
+}
+
++enum GameState ##[dotted]black {
+    MENU
+    PLAYING
+    PAUSED
+    GAME_OVER
+    WON
+}
+
++class Cell < record > ##[dotted]black {
+    Cell(int r, int c)
+}
+
+@enduml

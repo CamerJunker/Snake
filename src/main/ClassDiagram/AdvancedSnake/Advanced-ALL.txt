@@ -1,0 +1,222 @@
+@startuml
+MainApp ..|> GameView
+GameView ..|> GameController
+GameView ..|> GameModel
+GameView ..|> PopupMenu
+GameView ..|> SnakePanel
+GameModel ..|> GameState
+GameModel ..|> Cell
+GameModel ..|> Difficulty
+GameModel ..|> Direction
+GameController ..|> SoundManager
+
++class MainApp ##[bold]black{
+    -- Fields --
+    -{static}GameView gameView
+    -{static}boolean PopupOpen
+    -{static}PopupMenu popupMenuHolder
+    -- Functions --
+    +{static}main()
+    +{static}startGame(int n, int m)
+    .. Setters ..
+    +{static}PopupStateChange(boolean value)
+    +{static}passOnPopupMenu(PopupMenu popupmenu)
+    .. Getters ..
+    +{static}boolean getPopupState()
+    +{static}PopupMenu getRefPopupMenu()
+}
+
++class GameView < extends JFrame implements ActionListener > ##[bold]blue {
+    -- Fields --
+    -GameController controller
+    -SnakePanel panel
+    -Timer timer
+    -Timer renderTimer
+    -final int DELAY
+    -final int RENDER_DELAY
+    -JButton MenuButton
+    -PopupMenu popupMenu
+    -- Functions --
+    +GameView(int n, int m)
+    ..Implemented Function..
+    +actionPerformed(ActionEvent e)
+    .. GUI Functions ..
+    +ClosePopupMenu()
+    +CloseGameView()
+    +restartGame()
+    +toggleMenu()
+    .. Setter ..
+    +setDifficulty(Difficulty difficulty)
+}
+
++class GameController < extends KeyAdapter > ##[bold]blue {
+    -- Fields --
+    -GameModel model
+    -Timer timer
+    -int baseDelayMs
+    -GameView view
+    -final SoundManager soundManager
+    -Direction requestedDirection
+    -int lastScore
+    -int speedupMs
+    -{static}final int MIN_DELAY_MS
+    -- Functions --
+    +GameController(GameModel model, SnakePanel panel, Timer timer, GameView view)
+    .. Implemented Functions ..
+    +keyPressed(KeyEvent e)
+    .. Game Functions ..
+    +move()
+    +pause()
+    +unPause()
+    +resetGame()
+    .. Setter ..
+    +setDifficulty(Difficulty difficulty)
+    .. Getter ..
+    +getModel()
+}
+
++class PopupMenu < extends JFrame implements ActionListener > ##[dotted]black {
+    -- Fields --
+    JLabel ChangeGameSizelabel
+    JLabel rowLabel
+    JLabel colLabel
+    JLabel difficultyLabel
+    JTextField rowEntry
+    JTextField colEntry
+    JComboBox<Difficulty> difficultyBox
+    GameView gview
+    JButton ExitButton
+    JButton ChangeGridSize
+    JButton ApplyDifficulty
+    JButton RestartButton
+    JPanel entryPanel
+    JPanel difficultyPanel
+    -int TextSize
+    -int spacing
+    -int windowDimension
+    -int objectHeight
+    -- Functions --
+    PopupMenu(GameView gameview)
+    -applySelectedDifficulty()
+    .. Implemented Function ..
+    +actionPerformed(ActionEvent e)
+}
+
++class SnakePanel < extends JPanel > ##[dotted]black {
+    -- Fields --
+    -final GameModel model
+    +{static}final Color DARK_GREEN
+    -int CellSize
+    -{static}final int HUD_HEIGHT
+    -{static}final int HUD_PADDING
+    -{static}final int MIN_BOARD_SIZE
+    -int boardWidth
+    -int boardHeight
+    -- Functions --
+    +SnakePanel(GameModel model)
+    .. Implemented Function ..
+    #paintComponent(Graphics g)
+    .. Getters ..
+    +int getCellSize()
+    +int getHUDheight()
+    -float getStepAlpha()
+    -float interpolateWrapped(int prev, int current, int size, float t)
+    -List<Cell> toList(Iterable<Cell> cells)
+}
+
++class GameModel ##[bold]blue {
+    -- Fields --
+    -final int rows
+    -final int cols
+    -final Deque<Cell> snake
+    -final Set<Cell> occupied
+    -final Deque<Cell> prevSnake
+    -Direction dir
+    -Cell food
+    -int score
+    -GameState state
+    -long startTimeMs
+    -long lastStepTimeMs
+    -int stepDelayMs
+    -long elapsedTime
+    -final Random rng
+    -- Functions --
+    +GameModel(int n, int m)
+    +reset()
+    +step(Direction requested)
+    -int wrapRow(int r)
+    -int wrapCol(int c)
+    -setFood()
+    +pause()
+    +resume()
+    -snapshotSnake()
+    .. Getters ..
+    +Iterable<Cell> getSnake()
+    +Iterable<Cell> getPrevSnake()
+    +Cell getFood()
+    +int getScore()
+    +GameState getState()
+    +boolean isGameOver()
+    +Direction getDirection()
+    +int getCols()
+    +int getRows()
+    +long getLastStepTimeMs()
+    +int getStepDelayMs()
+    +long getElapsedSeconds()
+    .. Setters ..
+    +setLastStepTimeMs(long lastStepTimeMs)
+    +setStepDelayMs(int stepDelayMs)
+}
+
++enum GameState ##[dotted]black {
+    MENU
+    PLAYING
+    PAUSED
+    GAME_OVER
+    WON
+}
+
++class Cell < record > ##[dotted]black {
+    Cell(int r, int c)
+}
+
++class SoundManager ##[dotted]black {
+    -- Field --
+    -final Map<String, Clip> clips
+    -- Functions --
+    +load(String key, String resourcePath)
+    +play(String key)
+}
+
++enum Difficulty ##[dotted]black {
+    EASY()
+    NORMAL()
+    HARD()
+    -- Fields --
+    -final String label
+    -final int baseDelayMs
+    -final int speedupMs
+    -- Functions --
+    Difficulty(String label, int baseDelayMs, int speedupMs)
+    .. Getters ..
+    +int getBaseDelayMs()
+    +int getSpeedupMs()
+    .. Override Function ..
+    +String toString()
+}
+
++enum Direction ##[dotted]black {
+    UP()
+    DOWN()
+    LEFT()
+    RIGHT()
+    -- Fields --
+    +final int dr
+    +final int dc
+    -- Functions --
+    Direction(int dr, int dc)
+    +Direction opposite()
+}
+
+
+@enduml
