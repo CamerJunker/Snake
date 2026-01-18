@@ -43,11 +43,9 @@ public class PopupMenu extends JFrame implements ActionListener{
     private int windowDimension = 400;
     private int objectHeight = 30;
 
-    private MainApp mainApp;
-
-    PopupMenu(GameView gameview, MainApp main) {
-
-        mainApp = main;
+    PopupMenu(GameView gameview) {
+        // 
+        MainApp.PopupStateChange(true);
 
         // Create window
         gview = gameview;
@@ -114,6 +112,7 @@ public class PopupMenu extends JFrame implements ActionListener{
         });
     }
 
+
     private void applySelectedDifficulty() {
         Difficulty selected = (Difficulty) difficultyBox.getSelectedItem();
         if (selected != null) {
@@ -139,7 +138,7 @@ public class PopupMenu extends JFrame implements ActionListener{
             }
 
             if (rowVar <= 100 && rowVar >= 5 && colVar <= 100 && colVar >= 5) {
-                MainApp.startGame(rowVar, colVar, gview, mainApp);
+                MainApp.startGame(rowVar, colVar);
             }
 
         } else if (e.getSource() == ApplyDifficulty) {

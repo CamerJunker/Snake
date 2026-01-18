@@ -23,13 +23,9 @@ public class GameView extends JFrame implements ActionListener {
     // Menu Button
     private JButton MenuButton = new JButton("Menu(ESC)");
 
-    private PopupMenu popupMenu = null;
+    private PopupMenu popupMenu;
 
-    private MainApp mainApp;
-
-    public GameView(int n, int m, MainApp main) {
-        mainApp = main;
-
+    public GameView(int n, int m) {
         GameModel model = new GameModel(n, m);
         panel = new SnakePanel(model);
         panel.setLayout(null);
@@ -42,7 +38,8 @@ public class GameView extends JFrame implements ActionListener {
         panel.add(MenuButton);
         // Set location and size of button
         int menuWidth = MenuButton.getPreferredSize().width + 10;
-        MenuButton.setBounds(n*(CellSize-1)-menuWidth-4, 2, menuWidth, HUDheight-4);
+        int boardWidth = n * CellSize;
+        MenuButton.setBounds(boardWidth - menuWidth - 4, 2, menuWidth, HUDheight - 4);
         MenuButton.setToolTipText("åbn menuen");
         
         MenuButton.addActionListener(this);
@@ -66,6 +63,11 @@ public class GameView extends JFrame implements ActionListener {
         // Opret controller EFTER timeren findes
         controller = new GameController(model, panel, timer, this);
         panel.addKeyListener(controller);
+
+        // If popup menu is open, then pause game. In the case of resizing the game in the menu.
+        if (MainApp.getPopupState()){
+            controller.pause();
+        }
 
         timer.start();
         renderTimer = new Timer(RENDER_DELAY, e -> panel.repaint());
@@ -92,14 +94,22 @@ public class GameView extends JFrame implements ActionListener {
 
     // For at sætte variablen til null i PopupMenu klassen
     public void ClosePopupMenu(){
-        // First dispose of window
-        popupMenu.dispose();
+        // If the popupMenu variable is not null
+        if (popupMenu != null) {
+            popupMenu.dispose();
 
+        // If the popupMenu variable is null
+        // If a new game window was made, the reference is in MainApp
+        } else {
+            popupMenu = MainApp.getRefPopupMenu();
+            popupMenu.dispose();
+        }
+        
         // Restart GameController
         controller.unPause();
 
-        // Then set variable to null
-        popupMenu = null;
+        // Change state of PopupMenu in MainApp
+        MainApp.PopupStateChange(false);
 
         // Then return focus to panel
         panel.requestFocusInWindow();
@@ -114,6 +124,7 @@ public class GameView extends JFrame implements ActionListener {
     // Genstart spillet uden at lave et nyt vindue
     public void restartGame() {
         controller.resetGame();
+        controller.pause();
         panel.repaint();
         panel.requestFocusInWindow();
     }
@@ -123,11 +134,26 @@ public class GameView extends JFrame implements ActionListener {
         controller.setDifficulty(difficulty);
     }
 
+    // Åbn popup menu, hvis åben, luk popup menu
     public void toggleMenu() {
-        if (popupMenu == null) {
+        // If the popupmenu is not open
+        if (!MainApp.getPopupState()) {
+
+            // Pause game
             controller.pause();
-            popupMenu = new PopupMenu(this, mainApp);
+
+            // Create new popupmenu
+            popupMenu = new PopupMenu(this);
+
+            // Pass reference to popup menu to MainApp
+            MainApp.passOnPopupMenu(popupMenu);
+
+            // Set flag in MainApp to true
+            MainApp.PopupStateChange(true);
+
+            // Repaint panel
             panel.repaint();
+        // If the popupmenu is open
         } else {
             ClosePopupMenu();
         }

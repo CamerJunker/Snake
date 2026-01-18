@@ -1,0 +1,14 @@
+@startuml
++enum Direction ##[dotted]black {
+    UP()
+    DOWN()
+    LEFT()
+    RIGHT()
+    -- Fields --
+    +int dr
+    +int dc
+    -- Functions --
+    Direction(int dr, int dc)
+    +Direction opposite()
+}
+@enduml

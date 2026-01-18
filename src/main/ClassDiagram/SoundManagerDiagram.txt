@@ -1,0 +1,9 @@
+@startuml
++class SoundManager ##[dotted]black {
+    -- Field --
+    -final Map<String, Clip> clips
+    -- Functions --
+    +load(String key, String resourcePath)
+    +play(String key)
+}
+@enduml

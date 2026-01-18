@@ -3,7 +3,8 @@ package snake;
 public class MainApp {
 
     private static GameView gameView = null;
-    private static MainApp mainapp;
+    private static boolean PopupOpen;
+    private static PopupMenu popupMenuHolder;
 
     public static void main(String[] args) {
         // Tjekker at der er givet præcis to argumenter (n og m)
@@ -18,7 +19,7 @@ public class MainApp {
             int m = Integer.parseInt(args[1]);
 
             // Opretter og viser spilvinduet
-            startGame(n,m, gameView, mainapp);
+            startGame(n,m);
 
         } catch (NumberFormatException e) {
             // Håndterer tilfælde hvor input ikke er heltal
@@ -27,15 +28,32 @@ public class MainApp {
         }
     }
 
-    public static void startGame(int n, int m, GameView gameView, MainApp mainApp) {
+    public static void startGame(int n, int m) {
         // If the GameView does not exist already
         if (gameView == null) {
-            gameView = new GameView(n, m, mainApp);
+            gameView = new GameView(n, m);
 
         // If the GameView exists already
         } else {
             gameView.CloseGameView();
-            gameView = new GameView(n, m, mainApp);
+            gameView = new GameView(n, m);
         }
     }
+
+    // Change the state of whether the popup menu is open or not
+    public static void PopupStateChange(boolean value){
+        PopupOpen = value;
+    }
+    
+    // Get the state of whether the popup menu is open
+    public static boolean getPopupState(){return PopupOpen;}
+
+    // Pass popupmenu reference to MainApp, to close it if a new gamewindow is made.
+    public static void passOnPopupMenu(PopupMenu popupmenu) {
+        // Place reference into variable
+        popupMenuHolder = popupmenu;
+    }
+
+    // Get reference to popupmenu
+    public static PopupMenu getRefPopupMenu() {return popupMenuHolder;}
 }

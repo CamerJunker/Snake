@@ -1,0 +1,23 @@
+@startuml
++class SnakePanel < extends JPanel > ##[dotted]black {
+    -- Fields --
+    -final GameModel model
+    +{static}final Color DARK_GREEN
+    -int CellSize
+    -{static}final int HUD_HEIGHT
+    -{static}final int HUD_PADDING
+    -{static}final int MIN_BOARD_SIZE
+    -int boardWidth
+    -int boardHeight
+    -- Functions --
+    +SnakePanel(GameModel model)
+    .. Implemented Function ..
+    #paintComponent(Graphics g)
+    .. Getters ..
+    +int getCellSize()
+    +int getHUDheight()
+    -float getStepAlpha()
+    -float interpolateWrapped(int prev, int current, int size, float t)
+    -List<Cell> toList(Iterable<Cell> cells)
+}
+@enduml

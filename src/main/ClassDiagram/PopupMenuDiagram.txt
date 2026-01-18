@@ -1,0 +1,28 @@
+@startuml
++class PopupMenu < extends JFrame implements ActionListener > ##[dotted]black {
+    -- Fields --
+    JLabel ChangeGameSizelabel
+    JLabel rowLabel
+    JLabel colLabel
+    JLabel difficultyLabel
+    JTextField rowEntry
+    JTextField colEntry
+    JComboBox<Difficulty> difficultyBox
+    GameView gview
+    JButton ExitButton
+    JButton ChangeGridSize
+    JButton ApplyDifficulty
+    JButton RestartButton
+    JPanel entryPanel
+    JPanel difficultyPanel
+    -int TextSize
+    -int spacing
+    -int windowDimension
+    -int objectHeight
+    -- Functions --
+    PopupMenu(GameView gameview, MainApp, main)
+    -applySelectedDifficulty()
+    .. Implemented Function ..
+    +actionPerformed(ActionEvent e)
+}
+@enduml

@@ -1,0 +1,5 @@
+@startuml
++class Cell < record > ##[dotted]black {
+    Cell(int r, int c)
+}
+@enduml
