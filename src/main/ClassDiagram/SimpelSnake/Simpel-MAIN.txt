@@ -1,0 +1,6 @@
+@startuml
++class MainApp ##[bold]black {
+    -- Function --
+    +{static}main()
+}
+@enduml
