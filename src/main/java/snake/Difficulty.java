@@ -3,7 +3,8 @@ package snake;
 public enum Difficulty {
     EASY("Let", 140, 1),
     NORMAL("Normal", 100, 2),
-    HARD("Svær", 70, 3);
+    HARD("Svær", 70, 3),
+    EXTRAHARD("Ekstra Svær", 70, 3);
 
     private final String label;
     private final int baseDelayMs;

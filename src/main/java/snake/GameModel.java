@@ -17,6 +17,10 @@ public final class GameModel {
     private final Set<Cell> occupied = new HashSet<>();
     private final Deque<Cell> prevSnake = new ArrayDeque<>();
 
+    // Mure og ormehuller
+    private final Set<Cell> walls = new HashSet<>();
+    private final Map<Cell, Cell> wormholes = new HashMap<>();
+
     // den aktuelle spilstatus
     private Direction dir = Direction.LEFT;
     private Cell food;
@@ -28,6 +32,8 @@ public final class GameModel {
 
     // random generator til at placere maden tilfældigt
     private final Random rng = new Random();
+
+    private Difficulty difficulty = Difficulty.NORMAL;
 
     // Opretter modellen og initialiserer spillet
     public GameModel(int n, int m) {
@@ -50,6 +56,8 @@ public final class GameModel {
         // Issue 1: opret startslange (længde 2) i midten af brættet
         snake.clear();
         occupied.clear();
+        walls.clear();
+        wormholes.clear();
 
         // Midterposition på spillebrættet
         int r0 = rows / 2;
@@ -60,6 +68,25 @@ public final class GameModel {
 
         // Andet led placeres direkte under hovedet (wrap-around hvis nødvendigt)
         Cell second = new Cell((r0 + 1) % rows, c0);
+
+        // Beregn næste position for at undgå at placere mur der
+        int nextC = wrapCol(c0 - 1);
+        Cell nextHead = new Cell(r0, nextC);
+
+        // Tilføj nogle interne mure tilfældigt
+        if (rows > 10 && cols > 10 && difficulty == Difficulty.EXTRAHARD) {
+            int numWalls = rng.nextInt(50) + 30; // 30 til 50 mure
+            for (int i = 0; i < numWalls; i++) {
+                int r = rng.nextInt(rows - 2) + 1; // Undgå kanter
+                int c = rng.nextInt(cols - 2) + 1;
+                Cell wall = new Cell(r, c);
+                if (!wall.equals(head) && !wall.equals(second) && !wall.equals(nextHead) && !walls.contains(wall)) {
+                    walls.add(wall);
+                } else {
+                    i--; // Prøv igen
+                }
+            }
+        }
 
         // hovedet skal ligge forrest i Deque/rækkefølgen
         snake.addFirst(head);
@@ -102,10 +129,21 @@ public final class GameModel {
         Cell head = snake.peekFirst();
         Cell tail = snake.peekLast();
 
-        // beregn næste hovedposition (wrap around håndteres)
+        // beregn næste hovedposition (wrap-around, men mure begrænser)
         int nextR = wrapRow(head.r() + dir.dr);
         int nextC = wrapCol(head.c() + dir.dc);
         Cell nextHead = new Cell(nextR, nextC);
+
+        // Tjek om på mur
+        if (walls.contains(nextHead)) {
+            state = GameState.GAME_OVER;
+            return;
+        }
+
+        // Tjek ormehuller
+        if (wormholes.containsKey(nextHead)) {
+            nextHead = wormholes.get(nextHead);
+        }
 
         // tjek om slangen spiser mad i dette step
         boolean grows = nextHead.equals(food);
@@ -164,7 +202,7 @@ public final class GameModel {
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
                 Cell candidate = new Cell(r, c);
-                if (!occupied.contains(candidate)) {
+                if (!occupied.contains(candidate) && !walls.contains(candidate) && !wormholes.containsKey(candidate)) {
                     free.add(candidate);
                 }
             }
@@ -195,6 +233,12 @@ public final class GameModel {
     public long getElapsedSeconds() {
         return (System.currentTimeMillis() - startTimeMs) / 1000;
     }
+    public Iterable<Cell> getWalls() {
+        return Collections.unmodifiableCollection(walls);
+    }
+    public Map<Cell, Cell> getWormholes() {
+        return Collections.unmodifiableMap(wormholes);
+    }
 
     public void pause() {
         if (state == GameState.PLAYING) {
@@ -216,6 +260,10 @@ public final class GameModel {
         if (stepDelayMs > 0) {
             this.stepDelayMs = stepDelayMs;
         }
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
     }
 
     private void snapshotSnake() {

@@ -122,6 +122,7 @@ public class GameController extends KeyAdapter {
         lastScore = model.getScore();
         timer.setDelay(baseDelayMs);
         model.setStepDelayMs(baseDelayMs);
+        model.setDifficulty(difficulty);
     }
 
     // Returnerer GameModel, så View kan læse spillets tilstand (f.eks. WON eller GAME_OVER)
