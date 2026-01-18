@@ -1,0 +1,13 @@
+@startuml
++class GameController < extends KeyAdapter > ##[bold]blue {
+    -- Fields --
+    -final GameModel model
+    -final SnakePanel panel
+    -Direction currentDirection
+    -- Functions --
+    +GameController(GameModel model, SnakePanel panel)
+    -boolean isOpposite(Direction a, Direction b)
+    .. Implemented Function ..
+    +keyPressed(KeyEvent e)
+}
+@enduml
