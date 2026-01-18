@@ -1,6 +1,50 @@
 @startuml
-Cell
-Direction
-GameModel
+GameModel ..|> Cell
+GameModel ..|> Direction
+
++class Cell <record> ##[dotted]black {
+    Cell(int r, int c)
+}
+
++enum Direction ##[dotted]black {
+    UP()
+    DOWN()
+    LEFT()
+    RIGHT()
+    -- Fields --
+    +final int dr
+    +final int dc
+    -- Functions --
+    Direction(int dr, int dc)
+    +Direction opposite()
+}
+
++class GameModel ##[bold]blue {
+    -- Fields --
+    -final int rows
+    -final int cols
+    -final Deque<Cell> snake
+    -final Set<Cell> occupied
+    -Direction dir
+    -Cell food
+    -int score
+    -boolean gameOver
+    -final Random rng
+    -- Functions --
+    +GameModel(int n, int m)
+    +reset()
+    +step(Direction requested)
+    -int wrapRow(int r)
+    -int wrapCol(int c)
+    -setFood()
+    .. Getters ..
+    +Iterable<Cell> getSnake()
+    +Cell getFood()
+    +int getScore()
+    +boolean isGameOver()
+    +Direction getDirection()
+    +int getCols()
+    +int getRows()
+}
 
 @enduml
