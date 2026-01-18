@@ -9,7 +9,6 @@
     -int RENDER_DELAY
     -JButton MenuButton
     -PopupMenu popupMenu
-    -MainAp mainApp
     -- Functions --
     +GameView(int n, int m, MainApp main)
     ..Implemented Function..

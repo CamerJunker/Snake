@@ -6,5 +6,11 @@
     -- Functions --
     +{static}main()
     +{static}startGame(int n, int m, GameView gameView, MainApp mainApp)
+    .. Setters ..
+    +{static}PopupStateChange(boolean value)
+    +{static}passOnPopupMenu(PopupMenu popupmenu)
+    .. Getters ..
+    +{static}boolean getPopupState()
+    +{static}PopupMenu getRefPopupMenu()
 }
 @enduml
