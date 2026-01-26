@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
+import javax.swing.JCheckBox;
 import javax.swing.KeyStroke;
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
@@ -22,10 +23,13 @@ public class PopupMenu extends JFrame implements ActionListener{
     JLabel rowLabel = new JLabel("Row size (5-100)");
     JLabel colLabel = new JLabel("Column size (5-100)");
     JLabel difficultyLabel = new JLabel("Sværhedsgrad");
+    JLabel optionsLabel = new JLabel("Banetilvalg");
 
     JTextField rowEntry = new  JTextField();
     JTextField colEntry = new  JTextField();
     JComboBox<Difficulty> difficultyBox = new JComboBox<>(Difficulty.values());
+    JCheckBox wallsBox = new JCheckBox("Mure");
+    JCheckBox wormholesBox = new JCheckBox("Ormehuller");
 
     GameView gview;
 
@@ -33,10 +37,12 @@ public class PopupMenu extends JFrame implements ActionListener{
 
     JButton ChangeGridSize = new JButton("Change Grid Size");
     JButton ApplyDifficulty = new JButton("Sæt sværhedsgrad");
+    JButton ApplyOptions = new JButton("Sæt tilvalg");
     JButton RestartButton = new JButton("Restart");
 
     JPanel entryPanel = new JPanel();
     JPanel difficultyPanel = new JPanel();
+    JPanel optionsPanel = new JPanel();
 
     private int TextSize = 15;
     private int spacing = 10;
@@ -64,8 +70,13 @@ public class PopupMenu extends JFrame implements ActionListener{
         rowLabel.setFont(new Font(null,Font.PLAIN, TextSize));
         colLabel.setFont(new Font(null,Font.PLAIN, TextSize));
         difficultyLabel.setFont(new Font(null,Font.PLAIN, TextSize));
+        optionsLabel.setFont(new Font(null,Font.PLAIN, TextSize));
         difficultyBox.setFont(new Font(null,Font.PLAIN, TextSize));
+        wallsBox.setFont(new Font(null,Font.PLAIN, TextSize));
+        wormholesBox.setFont(new Font(null,Font.PLAIN, TextSize));
         difficultyBox.setSelectedItem(Difficulty.NORMAL);
+        wallsBox.setSelected(gview.isWallsEnabled());
+        wormholesBox.setSelected(gview.isWormholesEnabled());
 
         this.setLayout((new FlowLayout(FlowLayout.CENTER, spacing, spacing)));
 
@@ -77,9 +88,13 @@ public class PopupMenu extends JFrame implements ActionListener{
         difficultyPanel.setLayout(new GridLayout(1,2,spacing,spacing));
         difficultyPanel.setPreferredSize(new Dimension(windowDimension-30, objectHeight + spacing));
 
+        optionsPanel.setLayout(new GridLayout(1,2,spacing,spacing));
+        optionsPanel.setPreferredSize(new Dimension(windowDimension-30, objectHeight + spacing));
+
         // Add actionlisteners to buttons
         ChangeGridSize.addActionListener(this);
         ApplyDifficulty.addActionListener(this);
+        ApplyOptions.addActionListener(this);
         ExitButton.addActionListener(this);
         RestartButton.addActionListener(this);
 
@@ -95,6 +110,11 @@ public class PopupMenu extends JFrame implements ActionListener{
         difficultyPanel.add(difficultyLabel);
         difficultyPanel.add(difficultyBox);
         this.add(ApplyDifficulty);
+        this.add(optionsLabel);
+        this.add(optionsPanel);
+        optionsPanel.add(wallsBox);
+        optionsPanel.add(wormholesBox);
+        this.add(ApplyOptions);
         this.add(RestartButton);
         this.add(ExitButton);
 
@@ -117,6 +137,14 @@ public class PopupMenu extends JFrame implements ActionListener{
         Difficulty selected = (Difficulty) difficultyBox.getSelectedItem();
         if (selected != null) {
             gview.setDifficulty(selected);
+        }
+    }
+
+    private void applySelectedOptions(boolean restart) {
+        gview.setWallsEnabled(wallsBox.isSelected());
+        gview.setWormholesEnabled(wormholesBox.isSelected());
+        if (restart) {
+            gview.restartGame();
         }
     }
 
@@ -143,10 +171,13 @@ public class PopupMenu extends JFrame implements ActionListener{
 
         } else if (e.getSource() == ApplyDifficulty) {
             applySelectedDifficulty();
+        } else if (e.getSource() == ApplyOptions) {
+            applySelectedOptions(true);
         } else if (e.getSource() == ExitButton) {
             gview.ClosePopupMenu();
         } else if (e.getSource() == RestartButton) {
             applySelectedDifficulty();
+            applySelectedOptions(false);
             gview.restartGame();
         }
     }

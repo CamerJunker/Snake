@@ -109,6 +109,11 @@ public class SnakePanel extends JPanel {
         float alpha = getStepAlpha();
         List<Cell> currentSnake = toList(model.getSnake());
         List<Cell> previousSnake = toList(model.getPrevSnake());
+        if (model.didTeleportLastStep() || hasAnyJump(currentSnake, previousSnake)) {
+            // Skip interpolation on teleport/jumps to avoid drawing across the board.
+            alpha = 1.0f;
+            previousSnake = currentSnake;
+        }
 
         boolean head = true;
         for (int i = 0; i < currentSnake.size(); i++) {
@@ -185,6 +190,33 @@ public class SnakePanel extends JPanel {
         if (value < 0) value += size;
         if (value >= size) value -= size;
         return value;
+    }
+
+    private boolean hasAnyJump(List<Cell> currentSnake, List<Cell> previousSnake) {
+        if (currentSnake.isEmpty() || previousSnake.isEmpty()) return false;
+        int count = Math.min(currentSnake.size(), previousSnake.size());
+        for (int i = 0; i < count; i++) {
+            Cell current = currentSnake.get(i);
+            Cell previous = previousSnake.get(i);
+            int dr = current.r() - previous.r();
+            int dc = current.c() - previous.c();
+            int wrappedDr = adjustWrappedDelta(dr, model.getRows());
+            int wrappedDc = adjustWrappedDelta(dc, model.getCols());
+            if (Math.abs(wrappedDr) > 1 || Math.abs(wrappedDc) > 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private int adjustWrappedDelta(int delta, int size) {
+        if (Math.abs(delta) > 1) {
+            if (delta > 0) {
+                return delta - size;
+            }
+            return delta + size;
+        }
+        return delta;
     }
 
     private List<Cell> toList(Iterable<Cell> cells) {

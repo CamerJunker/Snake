@@ -134,6 +134,22 @@ public class GameView extends JFrame implements ActionListener {
         controller.setDifficulty(difficulty);
     }
 
+    public void setWallsEnabled(boolean enabled) {
+        controller.setWallsEnabled(enabled);
+    }
+
+    public void setWormholesEnabled(boolean enabled) {
+        controller.setWormholesEnabled(enabled);
+    }
+
+    public boolean isWallsEnabled() {
+        return controller.getModel().isWallsEnabled();
+    }
+
+    public boolean isWormholesEnabled() {
+        return controller.getModel().isWormholesEnabled();
+    }
+
     // Åbn popup menu, hvis åben, luk popup menu
     public void toggleMenu() {
         // If the popupmenu is not open

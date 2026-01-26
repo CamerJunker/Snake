@@ -20,6 +20,8 @@ public final class GameModel {
     // Mure og ormehuller
     private final Set<Cell> walls = new HashSet<>();
     private final Map<Cell, Cell> wormholes = new HashMap<>();
+    private boolean wallsEnabled = false;
+    private boolean wormholesEnabled = false;
 
     // den aktuelle spilstatus
     private Direction dir = Direction.LEFT;
@@ -30,11 +32,11 @@ public final class GameModel {
     private long lastStepTimeMs = System.currentTimeMillis();
     private int stepDelayMs = 100;
     private long elapsedTime;
+    private boolean teleportedLastStep = false;
 
     // random generator til at placere maden tilfældigt
     private final Random rng = new Random();
 
-    private Difficulty difficulty = Difficulty.NORMAL;
 
     // Opretter modellen og initialiserer spillet
     public GameModel(int n, int m) {
@@ -74,21 +76,6 @@ public final class GameModel {
         int nextC = wrapCol(c0 - 1);
         Cell nextHead = new Cell(r0, nextC);
 
-        // Tilføj nogle interne mure tilfældigt
-        if (rows > 10 && cols > 10 && difficulty == Difficulty.EXTRAHARD) {
-            int numWalls = rng.nextInt(50) + 30; // 30 til 50 mure
-            for (int i = 0; i < numWalls; i++) {
-                int r = rng.nextInt(rows - 2) + 1; // Undgå kanter
-                int c = rng.nextInt(cols - 2) + 1;
-                Cell wall = new Cell(r, c);
-                if (!wall.equals(head) && !wall.equals(second) && !wall.equals(nextHead) && !walls.contains(wall)) {
-                    walls.add(wall);
-                } else {
-                    i--; // Prøv igen
-                }
-            }
-        }
-
         // hovedet skal ligge forrest i Deque/rækkefølgen
         snake.addFirst(head);
         snake.addLast(second);
@@ -97,6 +84,14 @@ public final class GameModel {
         occupied.add(head);
         occupied.add(second);
         snapshotSnake();
+
+        // Tilføj mure og ormehuller hvis aktiveret
+        if (wallsEnabled) {
+            generateWalls(head, second, nextHead);
+        }
+        if (wormholesEnabled) {
+            generateWormholes(head, second, nextHead);
+        }
 
         // Reset game score
         this.score = 0;
@@ -121,6 +116,7 @@ public final class GameModel {
     public void step(Direction requested) {
         if (state != GameState.PLAYING) return;
         snapshotSnake();
+        teleportedLastStep = false;
 
         //opdater retning men forbyder en 180 graders vending
         if (requested != null && requested != dir.opposite()) {
@@ -142,9 +138,11 @@ public final class GameModel {
             return;
         }
 
+        boolean teleported = false;
         // Tjek ormehuller
         if (wormholes.containsKey(nextHead)) {
             nextHead = wormholes.get(nextHead);
+            teleported = true;
         }
 
         // tjek om slangen spiser mad i dette step
@@ -176,8 +174,14 @@ public final class GameModel {
             occupied.remove(removed);
         }
 
-        // Tjek om spilleren har vundet (slangen fylder hele brættet)
-        if (snake.size() == rows * cols) {
+        // Hvis vi har teleporteret, så snap interpolation til den nye position
+        if (teleported) {
+            snapshotSnake();
+            teleportedLastStep = true;
+        }
+
+        // Tjek om spilleren har vundet (slangen fylder alle tilladte felter)
+        if (snake.size() >= getAvailableCellCount()) {
             state = GameState.WON;
             return;
         }
@@ -195,8 +199,8 @@ public final class GameModel {
 
     //Placér mad tilfældigt, udenfor slangens krop
     private void setFood() {
-        if (occupied.size() == rows * cols) {
-            state = GameState.GAME_OVER;
+        if (occupied.size() >= getAvailableCellCount()) {
+            state = GameState.WON;
             return;
         }
 
@@ -208,6 +212,11 @@ public final class GameModel {
                     free.add(candidate);
                 }
             }
+        }
+
+        if (free.isEmpty()) {
+            state = GameState.WON;
+            return;
         }
 
         int pick = rng.nextInt(free.size());
@@ -248,6 +257,9 @@ public final class GameModel {
     public Map<Cell, Cell> getWormholes() {
         return Collections.unmodifiableMap(wormholes);
     }
+    public boolean didTeleportLastStep() {
+        return teleportedLastStep;
+    }
 
     public void pause() {
         if (state == GameState.PLAYING) {
@@ -275,12 +287,81 @@ public final class GameModel {
         }
     }
 
-    public void setDifficulty(Difficulty difficulty) {
-        this.difficulty = difficulty;
+    public boolean isWallsEnabled() {
+        return wallsEnabled;
+    }
+
+    public boolean isWormholesEnabled() {
+        return wormholesEnabled;
+    }
+
+    public void setWallsEnabled(boolean wallsEnabled) {
+        this.wallsEnabled = wallsEnabled;
+    }
+
+    public void setWormholesEnabled(boolean wormholesEnabled) {
+        this.wormholesEnabled = wormholesEnabled;
     }
 
     private void snapshotSnake() {
         prevSnake.clear();
         prevSnake.addAll(snake);
+    }
+
+    private int getAvailableCellCount() {
+        return rows * cols - walls.size() - wormholes.size();
+    }
+
+    private void generateWalls(Cell head, Cell second, Cell nextHead) {
+        int interiorRows = Math.max(0, rows - 2);
+        int interiorCols = Math.max(0, cols - 2);
+        int interiorCells = interiorRows * interiorCols;
+        int desiredWalls = Math.max(8, (rows * cols) / 15);
+        int maxWalls = Math.max(0, interiorCells - 3);
+        int targetWalls = Math.min(desiredWalls, maxWalls);
+
+        if (targetWalls <= 0) return;
+
+        List<Cell> candidates = new ArrayList<>(interiorCells);
+        for (int r = 1; r < rows - 1; r++) {
+            for (int c = 1; c < cols - 1; c++) {
+                Cell candidate = new Cell(r, c);
+                if (candidate.equals(head) || candidate.equals(second) || candidate.equals(nextHead)) {
+                    continue;
+                }
+                candidates.add(candidate);
+            }
+        }
+
+        Collections.shuffle(candidates, rng);
+        for (int i = 0; i < Math.min(targetWalls, candidates.size()); i++) {
+            walls.add(candidates.get(i));
+        }
+    }
+
+    private void generateWormholes(Cell head, Cell second, Cell nextHead) {
+        int desiredPairs = Math.max(1, Math.min(4, (rows * cols) / 200));
+        List<Cell> free = new ArrayList<>();
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                Cell candidate = new Cell(r, c);
+                if (candidate.equals(head) || candidate.equals(second) || candidate.equals(nextHead)) {
+                    continue;
+                }
+                if (occupied.contains(candidate) || walls.contains(candidate)) {
+                    continue;
+                }
+                free.add(candidate);
+            }
+        }
+
+        Collections.shuffle(free, rng);
+        int pairs = Math.min(desiredPairs, free.size() / 2);
+        for (int i = 0; i < pairs; i++) {
+            Cell a = free.get(i * 2);
+            Cell b = free.get(i * 2 + 1);
+            wormholes.put(a, b);
+            wormholes.put(b, a);
+        }
     }
 }
