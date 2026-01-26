@@ -124,6 +124,10 @@ public class GameController extends KeyAdapter {
         model.setStepDelayMs(baseDelayMs);
     }
 
+    public int getMinDelayMs() {
+        return MIN_DELAY_MS;
+    }
+
     public void setWallsEnabled(boolean enabled) {
         model.setWallsEnabled(enabled);
     }

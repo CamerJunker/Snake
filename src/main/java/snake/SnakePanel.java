@@ -19,20 +19,20 @@ public class SnakePanel extends JPanel {
 
     //Celle Størrelsen
     private int CellSize;
-    private static final int HUD_HEIGHT = 24;
-    private static final int HUD_PADDING = 6;
-    private static final int MIN_BOARD_SIZE = 400;
+    private static final int HUD_HEIGHT = 0;
+    private static final int MIN_CELL_SIZE = 8;
+    private static final int MAX_CELL_SIZE = 24;
 
     private int boardWidth;
     private int boardHeight;
 
-    public SnakePanel(GameModel model) {
+    public SnakePanel(GameModel model, int maxBoardWidth, int maxBoardHeight) {
         this.model = model;
 
-        int baseCellSize = 13;
-        int minCellSizeForWidth = MIN_BOARD_SIZE / model.getCols();
-        int minCellSizeForHeight = MIN_BOARD_SIZE / model.getRows();
-        CellSize = Math.max(baseCellSize, Math.max(minCellSizeForWidth, minCellSizeForHeight));
+        int maxCellWidth = Math.max(1, maxBoardWidth / model.getCols());
+        int maxCellHeight = Math.max(1, (maxBoardHeight - HUD_HEIGHT) / model.getRows());
+        int fitCellSize = Math.min(maxCellWidth, maxCellHeight);
+        CellSize = Math.max(MIN_CELL_SIZE, Math.min(MAX_CELL_SIZE, fitCellSize));
 
         boardWidth = model.getCols() * CellSize;
         boardHeight = model.getRows() * CellSize;
@@ -40,6 +40,10 @@ public class SnakePanel extends JPanel {
         this.setPreferredSize(new Dimension(boardWidth, boardHeight + HUD_HEIGHT));
         this.setBackground(DARK_GREEN);
         this.setFocusable(true);
+    }
+
+    public SnakePanel(GameModel model) {
+        this(model, 400, 400);
     }
 
     public int getCellSize() {
@@ -60,17 +64,6 @@ public class SnakePanel extends JPanel {
         //Rydder baggrunden
         g2d.setColor(DARK_GREEN);
         g2d.fillRect(0, 0, boardWidth, boardHeight + HUD_HEIGHT);
-
-        // HUD-baggrunden
-        g2d.setColor(new Color(30, 30, 30));
-        g2d.fillRect(0, 0, boardWidth, HUD_HEIGHT);
-
-        // HUD-teksten
-        g2d.setColor(Color.WHITE);
-        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 12f));
-        String hudText = "Score: " + model.getScore() + "   Tid: " + model.getElapsedSeconds() + "s   State: " + model.getState();
-        int hudTextY = (HUD_HEIGHT + g2d.getFontMetrics().getAscent()) / 2;
-        g2d.drawString(hudText, HUD_PADDING, hudTextY);
 
         // tegner mad
         Cell food = model.getFood();
